@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLB CẦU LÔNG - Quản Lý & Điểm Danh Ví Sân</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: 'var(--brand-50)',
+              100: 'var(--brand-100)',
+              200: 'var(--brand-200)',
+              500: 'var(--brand-500)',
+              600: 'var(--brand-600)',
+              700: 'var(--brand-700)',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --brand-50: #ecfdf5;
+      --brand-100: #d1fae5;
+      --brand-200: #a7f3d0;
+      --brand-500: #10b981; /* Badminton BWF Emerald Green */
+      --brand-600: #059669;
+      --brand-700: #047857;
+    }
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+
+  <!-- TOP HEADER -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo & Club Name -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-700 via-brand-600 to-teal-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 ring-2 ring-brand-500/20">
+          <!-- Shuttlecock SVG Icon -->
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2a1.5 1.5 0 0 0-1.5 1.5v2.1a12.9 12.9 0 0 0-5.8 3.5 1.5 1.5 0 0 0 .2 2.2l6.2 4.9a1.5 1.5 0 0 0 1.8 0l6.2-4.9a1.5 1.5 0 0 0 .2-2.2 12.9 12.9 0 0 0-5.8-3.5V3.5A1.5 1.5 0 0 0 12 2zm-1.5 16.2a2.5 2.5 0 1 0 3 0v-2.7h-3v2.7z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 id="headerClubName" class="font-extrabold text-lg leading-tight text-slate-900 tracking-tight">CLB CẦU LÔNG SMASH</h1>
+          <p class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Hệ thống Quản lý Sân & Quỹ CLB Cầu Lông
+          </p>
+        </div>
+      </div>
+
+      <!-- User Status & Quick Actions -->
+      <div class="flex items-center space-x-2 sm:space-x-4">
+        <!-- Date display -->
+        <div class="hidden sm:flex items-center text-xs font-semibold px-3 py-1.5 bg-slate-100 rounded-full text-slate-600 border border-slate-200">
+          <i data-lucide="calendar" class="w-3.5 h-3.5 mr-1.5 text-brand-600"></i>
+          <span id="currentDateDisplay">--/--/----</span>
+        </div>
+
+        <!-- Auth Status -->
+        <div id="userAuthBadge" class="flex items-center space-x-2">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT LAYOUT -->
+  <div class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex flex-col md:flex-row gap-6">
+
+    <!-- DESKTOP SIDEBAR NAVIGATION -->
+    <aside class="hidden md:block w-64 shrink-0">
+      <div class="bg-white rounded-2xl border border-slate-200 p-3 shadow-sm sticky top-24">
+        <nav class="space-y-1">
+          <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold transition text-brand-700 bg-brand-50">
+            <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+            <span>Trang chủ</span>
+          </button>
+          <button onclick="switchTab('attendance')" id="nav-attendance" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
+            <i data-lucide="user-check" class="w-5 h-5"></i>
+            <span>Điểm danh & Trừ ví</span>
+          </button>
+          <button onclick="switchTab('finance')" id="nav-finance" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
+            <i data-lucide="wallet" class="w-5 h-5"></i>
+            <span>Thanh toán & Quỹ</span>
+          </button>
+          <button onclick="switchTab('members')" id="nav-members" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
+            <i data-lucide="users" class="w-5 h-5"></i>
+            <span>Quản lý thành viên</span>
+          </button>
+          <button onclick="switchTab('matchmaker')" id="nav-matchmaker" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
+            <i data-lucide="shuffle" class="w-5 h-5"></i>
+            <span>Bốc thăm chia sân</span>
+          </button>
+          <button onclick="switchTab('settings')" id="nav-settings" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+            <span>Cấu hình & Sao lưu</span>
+          </button>
+        </nav>
+
+        <!-- Quick Summary Box: Bậc tiền sân -->
+        <div class="mt-6 pt-4 border-t border-slate-100 px-2">
+          <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-xl p-3.5 shadow-md">
+            <div class="flex items-center justify-between text-xs text-slate-300 font-medium">
+              <span>Bậc tiền sân hiện hành</span>
+              <i data-lucide="help-circle" class="w-3.5 h-3.5 text-emerald-400" title="Tự động tính lũy kế theo số buổi trong tháng"></i>
+            </div>
+            <div class="mt-2.5 text-xs space-y-1.5 text-slate-200">
+              <div class="flex justify-between items-center">
+                <span class="text-slate-400">0–4 buổi:</span>
+                <b class="text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded">50.000đ</b>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-slate-400">5–9 buổi:</span>
+                <b class="text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded">100.000đ</b>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-slate-400">10–15 buổi:</span>
+                <b class="text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded">150.000đ</b>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-slate-400">16–30+ buổi:</span>
+                <b class="text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded">200.000đ</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- TAB VIEW CONTAINER -->
+    <main class="flex-1 min-w-0 pb-20 md:pb-6">
+
+      <!-- ================= 1. TAB: TRANG CHỦ ================= -->
+      <section id="tab-dashboard" class="tab-pane space-y-6">
+        <!-- 4 KPI CARDS -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <!-- Card 1: Quỹ CLB -->
+          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Quỹ CLB</span>
+              <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <i data-lucide="piggy-bank" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="mt-3">
+              <span id="kpiClubFund" class="text-xl sm:text-2xl font-black text-slate-900">0 đ</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Số dư sẵn sàng chi tiêu chung</p>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+          </div>
+
+          <!-- Card 2: Quỹ tạm ứng -->
+          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Quỹ Tạm Ứng</span>
+              <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                <i data-lucide="hand-coins" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="mt-3">
+              <span id="kpiAdvanceFund" class="text-xl sm:text-2xl font-black text-slate-900">0 đ</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Thành viên ứng trước / Tiền cọc</p>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-500"></div>
+          </div>
+
+          <!-- Card 3: Tổng số dư ví thành viên -->
+          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Tổng Ví Thành Viên</span>
+              <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                <i data-lucide="wallet-cards" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="mt-3">
+              <span id="kpiTotalWallet" class="text-xl sm:text-2xl font-black text-slate-900">0 đ</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Tổng tiền nạp còn lại trong ví</p>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+          </div>
+
+          <!-- Card 4: Số lượng thành viên -->
+          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Số Lượng Hội Viên</span>
+              <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                <i data-lucide="users" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="mt-3 flex items-baseline gap-2">
+              <span id="kpiTotalMembers" class="text-xl sm:text-2xl font-black text-slate-900">0</span>
+              <span id="kpiMemberBreakdown" class="text-xs text-slate-500 font-medium">(-- chính thức)</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Đã đăng ký sinh hoạt CLB</p>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+          </div>
+        </div>
+
+        <!-- QUICK ACTIONS BAR -->
+        <div class="flex flex-wrap gap-2.5">
+          <button onclick="openQuickAttendanceModal()" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-sm font-bold rounded-xl shadow-md transition">
+            <i data-lucide="zap" class="w-4 h-4 mr-2 text-amber-300"></i>
+            ⚡ Điểm danh nhanh
+          </button>
+          <button onclick="switchTab('attendance')" class="inline-flex items-center px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-xl shadow-sm transition">
+            <i data-lucide="user-check" class="w-4 h-4 mr-2"></i>
+            Điểm danh hôm nay
+          </button>
+          <button onclick="openTopUpModal()" class="inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl shadow-sm transition">
+            <i data-lucide="plus-circle" class="w-4 h-4 mr-2"></i>
+            Nạp tiền vào ví
+          </button>
+          <button onclick="openFundTransactionModal('expense')" class="inline-flex items-center px-4 py-2.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl shadow-sm transition">
+            <i data-lucide="receipt" class="w-4 h-4 mr-2 text-rose-500"></i>
+            Ghi chi phí quỹ / Tiền cầu
+          </button>
+          <button onclick="openFineModal()" class="inline-flex items-center px-4 py-2.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl shadow-sm transition">
+            <i data-lucide="alert-triangle" class="w-4 h-4 mr-2 text-amber-500"></i>
+            Phạt vi phạm
+          </button>
+        </div>
+
+        <!-- 2 COLUMNS: THEO DÕI VÍ TỪNG THÀNH VIÊN + GIAO DỊCH GẦN ĐÂY -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Column 1: Theo dõi ví từng thành viên (7 cols) -->
+          <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <i data-lucide="wallet" class="w-4 h-4 text-brand-600"></i>
+                  Theo dõi ví từng thành viên
+                </h3>
+                <p class="text-xs text-slate-500">Số dư thực tế & số buổi đã tham gia trong tháng</p>
+              </div>
+              <span id="memberCountBadge" class="text-xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg">0 TV</span>
+            </div>
+
+            <!-- Search box for members -->
+            <div class="relative mb-3">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+              <input type="text" id="searchMemberWallet" oninput="renderDashboardWalletList()" placeholder="Tìm theo tên thành viên hoặc SĐT..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition" />
+            </div>
+
+            <div class="overflow-x-auto max-h-[380px] overflow-y-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-500 font-semibold sticky top-0 border-b border-slate-100 z-10">
+                  <tr>
+                    <th class="py-2.5 px-3">Thành viên</th>
+                    <th class="py-2.5 px-2">Phân loại</th>
+                    <th class="py-2.5 px-2 text-center">Buổi/Tháng</th>
+                    <th class="py-2.5 px-3 text-right">Số dư ví</th>
+                    <th class="py-2.5 px-2 text-center">Nạp ví</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardWalletTableBody" class="divide-y divide-slate-100">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Column 2: Giao dịch gần đây (5 cols) -->
+          <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-5 flex flex-col">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <i data-lucide="history" class="w-4 h-4 text-brand-600"></i>
+                  Giao dịch gần đây
+                </h3>
+                <p class="text-xs text-slate-500">Biến động quỹ & trừ tiền sân</p>
+              </div>
+              <button onclick="switchTab('finance')" class="text-xs font-semibold text-brand-700 hover:underline">Xem tất cả</button>
+            </div>
+
+            <div id="recentTransactionsList" class="space-y-2.5 overflow-y-auto max-h-[420px] flex-1 pr-1">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 2. TAB: ĐIỂM DANH & TÍNH TIỀN ================= -->
+      <section id="tab-attendance" class="tab-pane hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <!-- Heading & Date selection -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="user-check" class="w-5 h-5 text-brand-600"></i>
+                Điểm danh & Tự tính tiền sân Cầu Lông
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">Tự động cộng dồn số buổi trong tháng để tính đúng bậc tiền sân và tự động trừ vào ví</p>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <label for="attendanceDate" class="text-xs font-semibold text-slate-600">Ngày chơi:</label>
+              <input type="date" id="attendanceDate" onchange="onAttendanceDateChange()" class="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium" />
+            </div>
+          </div>
+
+          <!-- Bậc tiền sân current reminder -->
+          <div class="mt-4 p-3 bg-brand-50/70 border border-brand-200/60 rounded-xl flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2 text-brand-700 font-semibold">
+              <i data-lucide="info" class="w-4 h-4 shrink-0"></i>
+              <span>Biểu phí bậc tiền sân đang áp dụng:</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-slate-700" id="attendanceTiersBadgeList">
+              <span class="bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs">0–4 buổi: <b class="text-emerald-600">50.000đ</b></span>
+              <span class="bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs">5–9 buổi: <b class="text-emerald-600">100.000đ</b></span>
+              <span class="bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs">10–15 buổi: <b class="text-emerald-600">150.000đ</b></span>
+              <span class="bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs">16+ buổi: <b class="text-emerald-600">200.000đ</b></span>
+            </div>
+          </div>
+
+          <!-- FILTER CATEGORY TABS -->
+          <div class="mt-5 flex items-center justify-between flex-wrap gap-3">
+            <div class="flex p-1 bg-slate-100 rounded-xl text-xs font-semibold space-x-1">
+              <button onclick="setAttendanceFilter('all')" id="filter-att-all" class="att-filter-btn px-3 py-1.5 rounded-lg bg-white shadow-sm text-slate-800">Tất cả</button>
+              <button onclick="setAttendanceFilter('official')" id="filter-att-official" class="att-filter-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Thành viên chính thức</button>
+              <button onclick="setAttendanceFilter('unofficial')" id="filter-att-unofficial" class="att-filter-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Không chính thức</button>
+              <button onclick="setAttendanceFilter('guest')" id="filter-att-guest" class="att-filter-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Khách giao lưu (A/B/C)</button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="openQuickAttendanceModal()" class="inline-flex items-center text-xs font-bold px-3.5 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl shadow-sm transition">
+                <i data-lucide="zap" class="w-3.5 h-3.5 mr-1.5 text-amber-300"></i>
+                ⚡ Điểm danh nhanh (1-chạm / Zalo)
+              </button>
+              <!-- Quick Add Guest button -->
+              <button onclick="openAddGuestModal()" class="inline-flex items-center text-xs font-semibold px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl border border-slate-200 transition">
+                <i data-lucide="user-plus" class="w-3.5 h-3.5 mr-1.5"></i>
+                Thêm khách nhanh
+              </button>
+            </div>
+          </div>
+
+          <!-- ATTENDANCE CHECKLIST TABLE -->
+          <div class="mt-4 border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                  <tr>
+                    <th class="py-3 px-4 w-12 text-center">
+                      <input type="checkbox" id="checkAllAttendance" onchange="toggleSelectAllAttendance(this)" class="w-4 h-4 rounded text-brand-600 focus:ring-brand-500 cursor-pointer">
+                    </th>
+                    <th class="py-3 px-3">Họ và tên</th>
+                    <th class="py-3 px-2">Phân loại</th>
+                    <th class="py-3 px-2 text-center">Lũy kế tháng</th>
+                    <th class="py-3 px-3 text-right">Đơn giá áp dụng</th>
+                    <th class="py-3 px-3 text-right">Số dư ví hiện tại</th>
+                    <th class="py-3 px-3 text-center">Trạng thái ví</th>
+                  </tr>
+                </thead>
+                <tbody id="attendanceChecklistBody" class="divide-y divide-slate-100">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SUMMARY & CONFIRM ACTIONS -->
+          <div class="mt-5 p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4 text-xs">
+              <div>
+                <span class="text-slate-500">Đã chọn có mặt:</span>
+                <b id="selectedAttendanceCount" class="text-slate-900 text-sm ml-1 font-bold">0 người</b>
+              </div>
+              <div class="w-px h-5 bg-slate-300"></div>
+              <div>
+                <span class="text-slate-500">Tổng tiền sân thu dự tính:</span>
+                <b id="selectedAttendanceTotalAmount" class="text-brand-700 text-base font-black ml-1">0 đ</b>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+              <button onclick="confirmAttendanceAndDeduct()" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold rounded-xl shadow-md transition cursor-pointer">
+                <i data-lucide="check-circle-2" class="w-5 h-5 mr-2"></i>
+                Xác nhận điểm danh & Tự trừ tiền ví
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 3. TAB: THANH TOÁN & QUỸ ================= -->
+      <section id="tab-finance" class="tab-pane hidden space-y-6">
+        
+        <!-- Action Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Nạp tiền ví -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+                <i data-lucide="plus-circle" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-slate-900 text-base">Nạp tiền vào ví</h3>
+              <p class="text-xs text-slate-500 mt-1">Cộng số dư ví thành viên, hỗ trợ tạo mã QR chuyển khoản VietQR nhanh</p>
+            </div>
+            <button onclick="openTopUpModal()" class="mt-4 w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
+              Thực hiện nạp ví
+            </button>
+          </div>
+
+          <!-- Thu / Chi Quỹ CLB -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
+                <i data-lucide="arrow-left-right" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-slate-900 text-base">Thu / Chi Quỹ CLB</h3>
+              <p class="text-xs text-slate-500 mt-1">Ghi nhận chi mua cầu Yonex/Victor, tiền thuê sân cố định, nước uống hoặc thu tài trợ</p>
+            </div>
+            <div class="mt-4 flex gap-2">
+              <button onclick="openFundTransactionModal('income')" class="flex-1 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold rounded-xl transition">
+                + Thu quỹ
+              </button>
+              <button onclick="openFundTransactionModal('expense')" class="flex-1 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold rounded-xl transition">
+                - Chi quỹ
+              </button>
+            </div>
+          </div>
+
+          <!-- Quỹ tạm ứng -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
+                <i data-lucide="hand-coins" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-slate-900 text-base">Quỹ thành viên ứng trước</h3>
+              <p class="text-xs text-slate-500 mt-1">Quản lý tiền cọc giải đấu nội bộ, thành viên nộp trước tiền sân tháng</p>
+            </div>
+            <button onclick="openAdvanceFundModal()" class="mt-4 w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition">
+              Quản lý quỹ ứng trước
+            </button>
+          </div>
+        </div>
+
+        <!-- TRANSACTION HISTORY TABLE -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+            <div>
+              <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                <i data-lucide="receipt" class="w-5 h-5 text-brand-600"></i>
+                Theo dõi lịch sử giao dịch
+              </h3>
+              <p class="text-xs text-slate-500">Toàn bộ giao dịch nạp ví, trừ tiền sân, thu chi quỹ và phạt</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap items-center gap-2">
+              <select id="filterTxType" onchange="renderFullTransactionTable()" class="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:outline-none">
+                <option value="ALL">Tất cả loại giao dịch</option>
+                <option value="TOPUP">Nạp ví thành viên</option>
+                <option value="COURT_FEE">Trừ tiền sân</option>
+                <option value="FUND_IN">Thu Quỹ CLB</option>
+                <option value="FUND_OUT">Chi Quỹ CLB</option>
+                <option value="FINE">Tiền phạt</option>
+                <option value="ADVANCE">Quỹ tạm ứng</option>
+              </select>
+
+              <input type="text" id="searchTx" oninput="renderFullTransactionTable()" placeholder="Tìm kiếm giao dịch..." class="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:outline-none" />
+            </div>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-100 rounded-xl">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="py-2.5 px-3">Thời gian</th>
+                  <th class="py-2.5 px-2">Loại</th>
+                  <th class="py-2.5 px-3">Đối tượng / Nội dung</th>
+                  <th class="py-2.5 px-3 text-right">Số tiền</th>
+                  <th class="py-2.5 px-3">Người thực hiện</th>
+                </tr>
+              </thead>
+              <tbody id="fullTransactionTableBody" class="divide-y divide-slate-100">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= 4. TAB: QUẢN LÝ THÀNH VIÊN ================= -->
+      <section id="tab-members" class="tab-pane hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="users" class="w-5 h-5 text-brand-600"></i>
+                Danh sách Hội Viên Cầu Lông & Khách
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">Tạo tài khoản, quản lý số dư ví, cấp lại mật khẩu và phân loại</p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="openMemberModal('official')" class="inline-flex items-center px-3.5 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="user-plus" class="w-3.5 h-3.5 mr-1.5"></i>
+                + Thành viên chính thức
+              </button>
+              <button onclick="openMemberModal('unofficial')" class="inline-flex items-center px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl border border-slate-200 transition">
+                + Không chính thức
+              </button>
+              <button onclick="openAddGuestModal()" class="inline-flex items-center px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl border border-slate-200 transition">
+                + Khách A/B/C
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter & Search -->
+          <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex p-1 bg-slate-100 rounded-xl text-xs font-semibold space-x-1 w-full sm:w-auto">
+              <button onclick="setMemberListFilter('ALL')" id="filter-mem-all" class="mem-filter-btn px-3 py-1.5 rounded-lg bg-white shadow-sm text-slate-800">Tất cả</button>
+              <button onclick="setMemberListFilter('OFFICIAL')" id="filter-mem-official" class="mem-filter-btn px-3 py-1.5 rounded-lg text-slate-600">Chính thức</button>
+              <button onclick="setMemberListFilter('UNOFFICIAL')" id="filter-mem-unofficial" class="mem-filter-btn px-3 py-1.5 rounded-lg text-slate-600">Không chính thức</button>
+              <button onclick="setMemberListFilter('GUEST')" id="filter-mem-guest" class="mem-filter-btn px-3 py-1.5 rounded-lg text-slate-600">Khách giao lưu</button>
+            </div>
+
+            <div class="relative w-full sm:w-64">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+              <input type="text" id="searchMemberList" oninput="renderMemberManagementList()" placeholder="Tìm kiếm thành viên..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white" />
+            </div>
+          </div>
+
+          <!-- Member Table -->
+          <div class="mt-4 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                  <tr>
+                    <th class="py-3 px-4">Thành viên</th>
+                    <th class="py-3 px-2">Phân loại</th>
+                    <th class="py-3 px-3">Tài khoản</th>
+                    <th class="py-3 px-3 text-right">Số dư ví</th>
+                    <th class="py-3 px-2 text-center">Buổi tháng này</th>
+                    <th class="py-3 px-4 text-center">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="memberManagementTableBody" class="divide-y divide-slate-100">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 5. TAB: BỐC THĂM CHIA SÂN CẦU LÔNG ================= -->
+      <section id="tab-matchmaker" class="tab-pane hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="shuffle" class="w-5 h-5 text-brand-600"></i>
+                Bốc thăm Chia sân & Cặp đấu Cầu Lông (Matchmaker)
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">Tự động chọn các bạn có mặt hôm nay để ghép cặp Đánh Đôi (2 vs 2) hoặc Đánh Đơn (1 vs 1)</p>
+            </div>
+          </div>
+
+          <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left: Select players present -->
+            <div class="lg:col-span-5 border border-slate-200 rounded-xl p-4 bg-slate-50">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-700">Chọn người có mặt trên sân:</span>
+                <button onclick="selectAllForMatchmaking()" class="text-xs text-brand-700 font-semibold hover:underline">Chọn tất cả</button>
+              </div>
+              <div id="matchmakerPlayersList" class="max-h-80 overflow-y-auto space-y-1.5 pr-1 text-xs">
+                <!-- Rendered dynamically -->
+              </div>
+              
+              <!-- Match options -->
+              <div class="mt-4 pt-3 border-t border-slate-200 space-y-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Thể thức thi đấu:</label>
+                  <select id="matchFormatSelect" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white focus:outline-none">
+                    <option value="DOUBLES">Đánh Đôi (2 vs 2 - 4 người / sân)</option>
+                    <option value="SINGLES">Đánh Đơn (1 vs 1 - 2 người / sân)</option>
+                  </select>
+                </div>
+                
+                <button onclick="generateBadmintonMatches()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
+                  <i data-lucide="play" class="w-4 h-4"></i>
+                  Tạo lượt đấu ngẫu nhiên
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Match displays -->
+            <div class="lg:col-span-7">
+              <div class="flex items-center justify-between mb-3">
+                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Lượt thi đấu trên sân</h4>
+                <span id="matchStatsBadge" class="text-xs text-slate-500 font-medium"></span>
+              </div>
+              <div id="matchesOutputArea" class="space-y-4">
+                <div class="p-8 text-center text-slate-400 border-2 border-dashed border-slate-200 rounded-2xl text-xs">
+                  <i data-lucide="dice-5" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+                  Vui lòng tích chọn danh sách hội viên bên trái và nhấn "Tạo lượt đấu ngẫu nhiên"
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 6. TAB: CẤU HÌNH & SAO LƯU ================= -->
+      <section id="tab-settings" class="tab-pane hidden space-y-6">
+        
+        <!-- General config -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <h2 class="text-base font-bold text-slate-900 pb-3 border-b border-slate-100 flex items-center gap-2">
+            <i data-lucide="sliders" class="w-5 h-5 text-brand-600"></i>
+            Cấu hình Thông tin & Giao diện CLB Cầu Lông
+          </h2>
+
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Tên CLB:</label>
+              <input type="text" id="configClubName" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-bold" value="CLB CẦU LÔNG SMASH" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Màu chủ đạo giao diện (Theme):</label>
+              <select id="configThemeColor" onchange="applyThemeColor(this.value)" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-medium">
+                <option value="emerald">BWF Emerald Green (Xanh thảm sân cầu lông BWF)</option>
+                <option value="cyan">Badminton Cyan / Teal (Xanh ngọc lông vũ)</option>
+                <option value="ocean">Ocean Blue (Xanh đại dương thể thao)</option>
+                <option value="orange">Power Orange (Cam năng động)</option>
+                <option value="red">Yonex Crimson Red (Đỏ thể thao nhiệt huyết)</option>
+                <option value="purple">Royal Purple (Tím cao cấp)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Mức phạt mặc định (Vắng/Muộn):</label>
+              <div class="flex items-center gap-2">
+                <input type="number" id="configDefaultFine" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-bold" value="50000" step="10000" />
+                <span class="text-xs text-slate-500 font-semibold">VNĐ</span>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Thông tin VietQR (Ngân hàng & STK nạp ví):</label>
+              <input type="text" id="configBankInfo" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-medium" placeholder="VD: MBBANK - 0987654321 - CLB CAU LONG" value="MBBANK - 0987654321 - CLB CAU LONG" />
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+            <button onclick="saveGeneralConfig()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition">
+              Lưu thông tin CLB
+            </button>
+          </div>
+        </div>
+
+        <!-- Tier fee config -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div>
+              <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="layers" class="w-5 h-5 text-brand-600"></i>
+                Cấu hình Bậc tiền sân (Số buổi trong tháng)
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">Biểu phí tự động áp dụng khi điểm danh thành viên trong tháng</p>
+            </div>
+            <button onclick="addNewFeeTier()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-lg border border-slate-200 transition">
+              + Thêm bậc mới
+            </button>
+          </div>
+
+          <div class="mt-4 overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="py-2.5 px-3">Tên bậc</th>
+                  <th class="py-2.5 px-3">Từ buổi</th>
+                  <th class="py-2.5 px-3">Đến buổi</th>
+                  <th class="py-2.5 px-3">Đơn giá (VNĐ/buổi)</th>
+                  <th class="py-2.5 px-3 text-center">Xóa</th>
+                </tr>
+              </thead>
+              <tbody id="tierFeeConfigTableBody" class="divide-y divide-slate-100">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+            <button onclick="saveFeeTiersConfig()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition">
+              Lưu cấu hình bậc tiền sân
+            </button>
+          </div>
+        </div>
+
+        <!-- Guest Pricing config -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <h2 class="text-base font-bold text-slate-900 pb-3 border-b border-slate-100 flex items-center gap-2">
+            <i data-lucide="badge-percent" class="w-5 h-5 text-brand-600"></i>
+            Đơn giá Khách giao lưu A / B / C
+          </h2>
+
+          <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Khách giao lưu Loại A (VNĐ/buổi):</label>
+              <input type="number" id="guestPriceA" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-bold" value="70000" step="10000" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Khách giao lưu Loại B (VNĐ/buổi):</label>
+              <input type="number" id="guestPriceB" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-bold" value="100000" step="10000" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Khách giao lưu Loại C (VNĐ/buổi):</label>
+              <input type="number" id="guestPriceC" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-bold" value="150000" step="10000" />
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+            <button onclick="saveGuestPricingConfig()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition">
+              Lưu đơn giá khách
+            </button>
+          </div>
+        </div>
+
+        <!-- Backup & Restore -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <h2 class="text-base font-bold text-slate-900 pb-3 border-b border-slate-100 flex items-center gap-2">
+            <i data-lucide="database" class="w-5 h-5 text-brand-600"></i>
+            Sao lưu & Khôi phục Dữ liệu
+          </h2>
+
+          <p class="text-xs text-slate-500 mt-2">Dữ liệu được lưu trữ trực tiếp trong trình duyệt của bạn. Bạn có thể xuất ra tệp JSON để lưu trữ an toàn hoặc chuyển sang máy tính/điện thoại khác.</p>
+
+          <div class="mt-4 flex flex-wrap gap-3">
+            <button onclick="exportDataBackup()" class="inline-flex items-center px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
+              <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+              Tải tệp sao lưu dữ liệu (Export JSON)
+            </button>
+            
+            <label class="inline-flex items-center px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl border border-slate-200 cursor-pointer transition">
+              <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+              Khôi phục từ tệp sao lưu (Import JSON)
+              <input type="file" id="importJsonFile" accept=".json" onchange="importDataBackup(event)" class="hidden" />
+            </label>
+
+            <button onclick="resetDefaultDemoData()" class="inline-flex items-center px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-xl border border-rose-200 transition">
+              <i data-lucide="rotate-ccw" class="w-4 h-4 mr-2"></i>
+              Đặt lại dữ liệu mẫu ban đầu
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-2 py-1.5 flex justify-around items-center z-40 shadow-lg">
+    <button onclick="switchTab('dashboard')" id="m-nav-dashboard" class="flex flex-col items-center py-1 text-[11px] font-semibold text-brand-700">
+      <i data-lucide="layout-dashboard" class="w-5 h-5 mb-0.5"></i>
+      <span>Trang chủ</span>
+    </button>
+    <button onclick="switchTab('attendance')" id="m-nav-attendance" class="flex flex-col items-center py-1 text-[11px] font-semibold text-slate-500">
+      <i data-lucide="user-check" class="w-5 h-5 mb-0.5"></i>
+      <span>Điểm danh</span>
+    </button>
+    <button onclick="switchTab('finance')" id="m-nav-finance" class="flex flex-col items-center py-1 text-[11px] font-semibold text-slate-500">
+      <i data-lucide="wallet" class="w-5 h-5 mb-0.5"></i>
+      <span>Tài chính</span>
+    </button>
+    <button onclick="switchTab('members')" id="m-nav-members" class="flex flex-col items-center py-1 text-[11px] font-semibold text-slate-500">
+      <i data-lucide="users" class="w-5 h-5 mb-0.5"></i>
+      <span>Hội viên</span>
+    </button>
+    <button onclick="switchTab('settings')" id="m-nav-settings" class="flex flex-col items-center py-1 text-[11px] font-semibold text-slate-500">
+      <i data-lucide="settings" class="w-5 h-5 mb-0.5"></i>
+      <span>Cấu hình</span>
+    </button>
+  </div>
+
+  <!-- ================= MODALS CONTAINER ================= -->
+
+  <!-- 1. MODAL ĐĂNG NHẬP (Tài khoản mẫu: admin / admin123) -->
+  <div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-100">
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="lock" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-xl font-bold text-slate-900">Đăng Nhập Quản Trị CLB</h3>
+        <p class="text-xs text-slate-500 mt-1">Đăng nhập để điểm danh, thu chi quỹ và cấu hình hệ thống</p>
+      </div>
+
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Tài khoản</label>
+          <input type="text" id="loginUsername" required class="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-500 font-medium" placeholder="VD: admin" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Mật khẩu</label>
+          <input type="password" id="loginPassword" required class="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-500 font-medium" placeholder="VD: admin123" />
+        </div>
+
+        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
+          <span class="font-bold">Tài khoản mẫu:</span> <code class="bg-white px-1.5 py-0.5 rounded border border-amber-300 font-bold">admin</code> &nbsp;|&nbsp; 
+          <span class="font-bold">Mật khẩu:</span> <code class="bg-white px-1.5 py-0.5 rounded border border-amber-300 font-bold">admin123</code>
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeModal('loginModal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+            Đóng
+          </button>
+          <button type="submit" class="flex-1 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl transition">
+            Đăng nhập
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. MODAL NẠP TIỀN VÀO VÍ -->
+  <div id="topUpModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-3xl p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="plus-circle" class="w-5 h-5 text-emerald-600"></i>
+          Nạp tiền vào ví thành viên
+        </h3>
+        <button onclick="closeModal('topUpModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <form onsubmit="handleTopUpSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Chọn thành viên:</label>
+          <select id="topUpMemberSelect" required class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none">
+            <!-- Rendered dynamically -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Số tiền nạp (VNĐ):</label>
+          <input type="number" id="topUpAmount" required min="10000" step="10000" value="200000" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-bold text-slate-900" />
+          <div class="flex gap-2 mt-2">
+            <button type="button" onclick="setTopUpAmount(100000)" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded text-[11px] font-semibold text-slate-700">+100k</button>
+            <button type="button" onclick="setTopUpAmount(200000)" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded text-[11px] font-semibold text-slate-700">+200k</button>
+            <button type="button" onclick="setTopUpAmount(500000)" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded text-[11px] font-semibold text-slate-700">+500k</button>
+            <button type="button" onclick="setTopUpAmount(1000000)" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded text-[11px] font-semibold text-slate-700">+1.000k</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Hình thức nạp tiền:</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-2 p-2.5 border border-slate-200 rounded-xl text-xs cursor-pointer hover:bg-slate-50">
+              <input type="radio" name="topUpMethod" value="CASH" checked class="text-brand-600 focus:ring-brand-500">
+              <span>Tiền mặt trực tiếp</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 border border-slate-200 rounded-xl text-xs cursor-pointer hover:bg-slate-50">
+              <input type="radio" name="topUpMethod" value="TRANSFER" class="text-brand-600 focus:ring-brand-500">
+              <span>Chuyển khoản (VietQR)</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Ghi chú giao dịch:</label>
+          <input type="text" id="topUpNote" placeholder="VD: Nạp tiền ví tháng này" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none" />
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeModal('topUpModal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+            Hủy
+          </button>
+          <button type="submit" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
+            Xác nhận Nạp tiền
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. MODAL THU / CHI QUỸ CLB -->
+  <div id="fundTransactionModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <h3 id="fundModalTitle" class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <!-- Title via JS -->
+        </h3>
+        <button onclick="closeModal('fundTransactionModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <form onsubmit="handleFundTransactionSubmit(event)" class="space-y-4">
+        <input type="hidden" id="fundTransactionType" value="expense" />
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Số tiền (VNĐ):</label>
+          <input type="number" id="fundAmount" required min="1000" step="5000" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-bold" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Hạng mục / Lý do:</label>
+          <input type="text" id="fundCategory" required placeholder="VD: Mua 2 hộp cầu Victor Champ, tiền thuê sân tháng, nước khoáng..." class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none" />
+          
+          <!-- Badminton Quick Suggestions -->
+          <div class="flex flex-wrap gap-1.5 mt-2">
+            <span onclick="setFundCategoryQuick('Mua ống cầu Victor Champion')" class="cursor-pointer px-2 py-0.5 bg-slate-100 hover:bg-slate-200 rounded text-[10px] text-slate-600 font-medium">+ Ống cầu Victor</span>
+            <span onclick="setFundCategoryQuick('Mua ống cầu Yonex AS-40')" class="cursor-pointer px-2 py-0.5 bg-slate-100 hover:bg-slate-200 rounded text-[10px] text-slate-600 font-medium">+ Cầu Yonex</span>
+            <span onclick="setFundCategoryQuick('Tiền thuê sân cầu lông cố định tháng')" class="cursor-pointer px-2 py-0.5 bg-slate-100 hover:bg-slate-200 rounded text-[10px] text-slate-600 font-medium">+ Thuê sân tháng</span>
+            <span onclick="setFundCategoryQuick('Nước uống & điện giải')" class="cursor-pointer px-2 py-0.5 bg-slate-100 hover:bg-slate-200 rounded text-[10px] text-slate-600 font-medium">+ Nước uống</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Người phụ trách / Người nộp / Nhận:</label>
+          <input type="text" id="fundParty" placeholder="VD: Ban chủ nhiệm / Thủ quỹ" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none" />
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeModal('fundTransactionModal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+            Hủy
+          </button>
+          <button type="submit" id="fundSubmitBtn" class="flex-1 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl transition">
+            Lưu giao dịch
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. MODAL QUẢN LÝ QUỸ TẠM ỨNG -->
+  <div id="advanceFundModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="hand-coins" class="w-5 h-5 text-amber-500"></i>
+          Quỹ thành viên ứng trước / Tiền cọc
+        </h3>
+        <button onclick="closeModal('advanceFundModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <form onsubmit="handleAdvanceFundSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Loại điều chỉnh:</label>
+          <select id="advanceType" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none">
+            <option value="IN">+ Thành viên đóng ứng trước (Cộng quỹ tạm ứng)</option>
+            <option value="OUT">- Hoàn trả / Chi từ quỹ tạm ứng (Trừ quỹ tạm ứng)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Số tiền (VNĐ):</label>
+          <input type="number" id="advanceAmount" required min="10000" step="10000" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-bold" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Thành viên ứng trước / Ghi chú:</label>
+          <input type="text" id="advanceDescription" required placeholder="VD: Anh Nam ứng trước tiền đặt cọc giải Cầu Lông mùa Thu..." class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none" />
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeModal('advanceFundModal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+            Hủy
+          </button>
+          <button type="submit" class="flex-1 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition">
+            Lưu quỹ tạm ứng
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. MODAL PHẠT VI PHẠM -->
+  <div id="fineModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-500"></i>
+          Xử phạt vi phạm nội quy CLB
+        </h3>
+        <button onclick="closeModal('fineModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <form onsubmit="handleFineSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Thành viên vi phạm:</label>
+          <select id="fineMemberSelect" required class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none">
+            <!-- Rendered dynamically -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Số tiền phạt (VNĐ):</label>
+          <input type="number" id="fineAmount" required min="10000" step="10000" value="50000" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-bold" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Lý do phạt:</label>
+          <input type="text" id="fineReason" required placeholder="VD: Đến muộn quá 30 phút, hủy sân sát giờ thi đấu..." class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Phương thức xử lý:</label>
+          <div class="space-y-1.5">
+            <label class="flex items-center gap-2 p-2 border border-slate-200 rounded-xl text-xs cursor-pointer hover:bg-slate-50">
+              <input type="radio" name="fineMethod" value="WALLET" checked class="text-brand-600 focus:ring-brand-500">
+              <span>Trừ trực tiếp vào ví thành viên</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 border border-slate-200 rounded-xl text-xs cursor-pointer hover:bg-slate-50">
+              <input type="radio" name="fineMethod" value="CASH_TO_FUND" class="text-brand-600 focus:ring-brand-500">
+              <span>Nộp tiền mặt (Cộng thẳng vào Quỹ CLB)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeModal('fineModal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+            Hủy
+          </button>
+          <button type="submit" class="flex-1 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition">
+            Xác nhận phạt
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. MODAL THÊM / SỬA THÀNH VIÊN -->
+  <div id="memberModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <h3 id="memberModalTitle" class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="user-plus" class="w-5 h-5 text-brand-600"></i>
+          Thêm thành viên mới
+        </h3>
+        <button onclick="closeModal('memberModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <form onsubmit="handleMemberSubmit(event)" class="space-y-4">
+        <input type="hidden" id="memberEditId" value="" />
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Họ và tên (*):</label>
+          <input type="text" id="memberFullName" required placeholder="VD: Nguyễn Văn Nam" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Số điện thoại:</label>
+          <input type="tel" id="memberPhone" placeholder="VD: 0912345678" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Phân loại hội viên:</label>
+          <select id="memberTypeSelect" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none">
+            <option value="OFFICIAL">Thành viên chính thức (Official)</option>
+            <option value="UNOFFICIAL">Thành viên không chính thức / Tập sự</option>
+          </select>
+        </div>
+
+        <div id="accountCredentialFields" class="border-t border-slate-100 pt-3 space-y-3">
+          <p class="text-[11px] font-bold text-slate-500 uppercase">Tài khoản đăng nhập hệ thống:</p>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] font-medium text-slate-600 mb-1">Tên đăng nhập:</label>
+              <input type="text" id="memberUsername" placeholder="namnv" class="w-full px-2.5 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-slate-600 mb-1">Mật khẩu:</label>
+              <input type="text" id="memberPassword" placeholder="123" class="w-full px-2.5 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none" />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Số dư ví ban đầu (VNĐ):</label>
+          <input type="number" id="memberInitialBalance" value="0" step="10000" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-bold" />
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeModal('memberModal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+            Hủy
+          </button>
+          <button type="submit" class="flex-1 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl transition">
+            Lưu thành viên
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 7. MODAL THÊM KHÁCH GIAO LƯU (A/B/C) -->
+  <div id="addGuestModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="user-plus" class="w-5 h-5 text-indigo-600"></i>
+          Thêm Khách Giao Lưu Nhanh
+        </h3>
+        <button onclick="closeModal('addGuestModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <form onsubmit="handleAddGuestSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Tên khách giao lưu (*):</label>
+          <input type="text" id="guestName" required placeholder="VD: Khách Dũng (Đội bạn giao lưu)" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Số điện thoại (tùy chọn):</label>
+          <input type="tel" id="guestPhone" placeholder="VD: 0988776655" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Loại khách giao lưu:</label>
+          <select id="guestTypeSelect" onchange="updateGuestPricePreview()" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-medium">
+            <option value="GUEST_A">Khách Loại A - Khách quen / Sinh viên</option>
+            <option value="GUEST_B" selected>Khách Loại B - Khách giao lưu tiêu chuẩn</option>
+            <option value="GUEST_C">Khách Loại C - Khách VIP / Giao lưu đặc biệt</option>
+          </select>
+        </div>
+
+        <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-xl flex items-center justify-between text-xs">
+          <span class="text-indigo-800 font-medium">Đơn giá tiền sân tính cho khách:</span>
+          <b id="guestPricePreview" class="text-indigo-900 font-bold text-sm">100.000 đ</b>
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeModal('addGuestModal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+            Hủy
+          </button>
+          <button type="submit" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition">
+            Thêm & Đưa vào danh sách
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 8. MODAL CẤP LẠI MẬT KHẨU -->
+  <div id="resetPasswordModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="key" class="w-5 h-5 text-amber-500"></i>
+          Cấp lại mật khẩu thành viên
+        </h3>
+        <button onclick="closeModal('resetPasswordModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <form onsubmit="handleResetPasswordSubmit(event)" class="space-y-4">
+        <input type="hidden" id="resetPasswordMemberId" value="" />
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Thành viên:</label>
+          <input type="text" id="resetPasswordMemberName" disabled class="w-full px-3 py-2 text-xs bg-slate-100 border border-slate-200 rounded-xl text-slate-600 font-semibold" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Mật khẩu mới:</label>
+          <input type="text" id="newResetPassword" required value="123456" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-mono" />
+          <p class="text-[11px] text-slate-400 mt-1">Mật khẩu mặc định khuyến nghị: <code>123456</code></p>
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeModal('resetPasswordModal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+            Hủy
+          </button>
+          <button type="submit" class="flex-1 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition">
+            Cập nhật mật khẩu
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 9. MODAL CHỈNH SỬA TÊN & THÔNG TIN THÀNH VIÊN (CHO ADMIN) -->
+  <div id="quickRenameModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="user-cog" class="w-5 h-5 text-brand-600"></i>
+          Chỉnh sửa tên & thông tin thành viên
+        </h3>
+        <button onclick="closeModal('quickRenameModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <form onsubmit="handleQuickRenameSubmit(event)" class="space-y-4">
+        <input type="hidden" id="quickRenameMemberId" value="" />
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Họ và tên thành viên (*):</label>
+          <input type="text" id="quickRenameName" required placeholder="Nhập tên mới..." class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-bold text-slate-900" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Số điện thoại:</label>
+          <input type="tel" id="quickRenamePhone" placeholder="VD: 0912345678" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Phân loại hội viên:</label>
+          <select id="quickRenameType" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-medium">
+            <option value="OFFICIAL">Thành viên chính thức (Official)</option>
+            <option value="UNOFFICIAL">Thành viên không chính thức / Tập sự</option>
+            <option value="GUEST_A">Khách giao lưu Loại A</option>
+            <option value="GUEST_B">Khách giao lưu Loại B</option>
+            <option value="GUEST_C">Khách giao lưu Loại C</option>
+          </select>
+        </div>
+
+        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800">
+          <i data-lucide="info" class="w-3.5 h-3.5 inline mr-1 text-emerald-600"></i>
+          Khi đổi tên, toàn bộ lịch sử nạp ví, trừ tiền sân và điểm danh của thành viên này sẽ tự động được cập nhật theo tên mới.
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeModal('quickRenameModal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+            Hủy
+          </button>
+          <button type="submit" class="flex-1 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl transition">
+            Lưu thay đổi
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 10. MODAL TẠO ĐIỂM DANH NHANH (1-CHẠM / DÁN DANH SÁCH ZALO / THEO NHÓM) -->
+  <div id="quickAttendanceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-2xl rounded-3xl p-6 shadow-2xl border border-slate-100 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4 shrink-0">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="zap" class="w-5 h-5 text-amber-500"></i>
+          ⚡ Tạo Điểm Danh Nhanh Thành Viên CLB Cầu Lông
+        </h3>
+        <button onclick="closeModal('quickAttendanceModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <!-- Quick Attendance Sub-tabs -->
+      <div class="flex p-1 bg-slate-100 rounded-xl text-xs font-semibold space-x-1 mb-4 shrink-0">
+        <button onclick="switchQuickAttendanceSubTab('single')" id="qa-subtab-single" class="qa-tab-btn flex-1 py-1.5 rounded-lg bg-white shadow-sm text-slate-800">
+          ⚡ 1-Chạm Tìm & Điểm danh
+        </button>
+        <button onclick="switchQuickAttendanceSubTab('zalo')" id="qa-subtab-zalo" class="qa-tab-btn flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">
+          📋 Dán danh sách Zalo / Nhóm
+        </button>
+        <button onclick="switchQuickAttendanceSubTab('group')" id="qa-subtab-group" class="qa-tab-btn flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">
+          👥 Điểm danh theo nhóm
+        </button>
+      </div>
+
+      <div class="overflow-y-auto flex-1 pr-1 space-y-4">
+        <!-- MODE 1: SINGLE 1-CLICK -->
+        <div id="qa-mode-single" class="qa-mode-pane space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Chọn hoặc tìm kiếm thành viên:</label>
+            <select id="qaSingleMemberSelect" onchange="updateQaSinglePreview()" class="w-full px-3 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 font-bold text-slate-900">
+              <!-- Rendered via JS -->
+            </select>
+          </div>
+
+          <!-- Preview Info Card -->
+          <div id="qaSinglePreviewCard" class="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl">
+            <!-- Rendered dynamically via JS -->
+          </div>
+
+          <button onclick="executeQaSingle()" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-2">
+            <i data-lucide="zap" class="w-4 h-4 text-amber-300"></i>
+            Xác nhận Điểm Danh & Trừ Ví Ngay
+          </button>
+        </div>
+
+        <!-- MODE 2: PASTE ZALO -->
+        <div id="qa-mode-zalo" class="qa-mode-pane hidden space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Dán danh sách người tham gia từ Zalo / Messenger:</label>
+            <textarea id="qaZaloTextarea" rows="4" placeholder="VD:&#10;1. Tuấn&#10;2. Hoàng&#10;3. Hương&#10;4. Long" class="w-full p-3 text-xs border border-slate-200 rounded-xl focus:outline-none font-mono"></textarea>
+            <p class="text-[11px] text-slate-400 mt-1">Hệ thống sẽ tự động bóc tách số thứ tự, gạch đầu dòng và tìm tên thành viên tương ứng.</p>
+          </div>
+
+          <button onclick="parseAndMatchZaloList()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5">
+            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+            Quét & Khớp thành viên
+          </button>
+
+          <!-- Matching results -->
+          <div id="qaZaloResultsArea" class="hidden space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-700">Kết quả khớp tên:</span>
+              <span id="qaZaloMatchedCount" class="text-xs text-emerald-600 font-bold">0 người</span>
+            </div>
+            <div id="qaZaloMatchedList" class="max-h-48 overflow-y-auto space-y-1.5 border border-slate-200 rounded-xl p-2 bg-slate-50 text-xs">
+              <!-- Rendered via JS -->
+            </div>
+            <button onclick="executeQaZaloBatch()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-md transition">
+              ⚡ Điểm danh toàn bộ người đã khớp
+            </button>
+          </div>
+        </div>
+
+        <!-- MODE 3: GROUP PRESET -->
+        <div id="qa-mode-group" class="qa-mode-pane hidden space-y-3">
+          <p class="text-xs text-slate-500">Điểm danh hàng loạt theo từng khối thành viên trong CLB:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button onclick="executeQaGroup('OFFICIAL')" class="p-3.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-2xl text-left transition">
+              <div class="font-bold text-emerald-900 text-xs flex items-center gap-1.5">
+                <i data-lucide="users" class="w-4 h-4 text-emerald-600"></i>
+                Toàn bộ Thành viên Chính thức
+              </div>
+              <p class="text-[11px] text-emerald-700 mt-1">Tự động trừ ví tất cả hội viên chính thức</p>
+            </button>
+            <button onclick="executeQaGroup('UNOFFICIAL')" class="p-3.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-2xl text-left transition">
+              <div class="font-bold text-amber-900 text-xs flex items-center gap-1.5">
+                <i data-lucide="users" class="w-4 h-4 text-amber-600"></i>
+                Toàn bộ Thành viên Tập sự
+              </div>
+              <p class="text-[11px] text-amber-700 mt-1">Tự động trừ ví tất cả hội viên tập sự</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent quick check-ins in this session -->
+        <div class="pt-3 border-t border-slate-100">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-700 flex items-center gap-1">
+              <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-400"></i>
+              Đã điểm danh trong phiên này:
+            </span>
+            <span id="qaSessionCount" class="text-[11px] text-slate-500 font-semibold">0 lượt</span>
+          </div>
+          <div id="qaSessionLogList" class="space-y-1.5 max-h-32 overflow-y-auto text-xs">
+            <div class="text-[11px] text-slate-400 italic py-1">Chưa có lượt điểm danh nhanh nào trong phiên này</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-4 border-t border-slate-100 mt-4 flex justify-end shrink-0">
+        <button type="button" onclick="closeModal('quickAttendanceModal')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+          Hoàn tất / Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
