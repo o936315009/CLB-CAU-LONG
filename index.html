@@ -170,79 +170,59 @@
 
       <!-- ================= 1. TAB: TRANG CHỦ ================= -->
       <section id="tab-dashboard" class="tab-pane space-y-6">
-        <!-- 4 KPI CARDS -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <!-- 3 KPI CARDS (HIỂN THỊ ĐỦ TRÊN 1 DÒNG) -->
+        <div class="grid grid-cols-3 gap-2.5 sm:gap-4">
           <!-- Card 1: Quỹ CLB -->
-          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+          <div class="bg-white p-3 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md flex flex-col justify-between">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Quỹ CLB</span>
-              <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                <i data-lucide="piggy-bank" class="w-5 h-5"></i>
+              <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 truncate">Quỹ CLB</span>
+              <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <i data-lucide="piggy-bank" class="w-4 h-4 sm:w-5 sm:h-5"></i>
               </div>
             </div>
-            <div class="mt-3">
-              <span id="kpiClubFund" class="text-xl sm:text-2xl font-black text-slate-900">0 đ</span>
+            <div class="mt-2 sm:mt-3">
+              <span id="kpiClubFund" class="text-base sm:text-2xl font-black text-slate-900 block truncate">0 đ</span>
             </div>
-            <p class="text-[11px] text-slate-400 mt-1">Số dư sẵn sàng chi tiêu chung</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1 truncate">Số dư chi tiêu chung</p>
             <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
           </div>
 
           <!-- Card 2: Quỹ tạm ứng -->
-          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+          <div class="bg-white p-3 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md flex flex-col justify-between">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Quỹ Tạm Ứng</span>
-              <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-                <i data-lucide="hand-coins" class="w-5 h-5"></i>
+              <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 truncate">Quỹ Tạm Ứng</span>
+              <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                <i data-lucide="hand-coins" class="w-4 h-4 sm:w-5 sm:h-5"></i>
               </div>
             </div>
-            <div class="mt-3">
-              <span id="kpiAdvanceFund" class="text-xl sm:text-2xl font-black text-slate-900">0 đ</span>
+            <div class="mt-2 sm:mt-3">
+              <span id="kpiAdvanceFund" class="text-base sm:text-2xl font-black text-slate-900 block truncate">0 đ</span>
             </div>
-            <p class="text-[11px] text-slate-400 mt-1">Thành viên ứng trước / Tiền cọc</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1 truncate">Tiền cọc / Ứng trước</p>
             <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-500"></div>
           </div>
 
           <!-- Card 3: Tổng số dư ví thành viên -->
-          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+          <div class="bg-white p-3 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md flex flex-col justify-between">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Tổng Ví Thành Viên</span>
-              <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                <i data-lucide="wallet-cards" class="w-5 h-5"></i>
+              <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 truncate">Ví Thành Viên</span>
+              <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <i data-lucide="wallet-cards" class="w-4 h-4 sm:w-5 sm:h-5"></i>
               </div>
             </div>
-            <div class="mt-3">
-              <span id="kpiTotalWallet" class="text-xl sm:text-2xl font-black text-slate-900">0 đ</span>
+            <div class="mt-2 sm:mt-3">
+              <span id="kpiTotalWallet" class="text-base sm:text-2xl font-black text-slate-900 block truncate">0 đ</span>
             </div>
-            <p class="text-[11px] text-slate-400 mt-1">Tổng tiền nạp còn lại trong ví</p>
+            <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1 truncate">Tổng tiền trong ví</p>
             <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
-          </div>
-
-          <!-- Card 4: Số lượng thành viên -->
-          <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Số Lượng Hội Viên</span>
-              <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
-                <i data-lucide="users" class="w-5 h-5"></i>
-              </div>
-            </div>
-            <div class="mt-3 flex items-baseline gap-2">
-              <span id="kpiTotalMembers" class="text-xl sm:text-2xl font-black text-slate-900">0</span>
-              <span id="kpiMemberBreakdown" class="text-xs text-slate-500 font-medium">(-- chính thức)</span>
-            </div>
-            <p class="text-[11px] text-slate-400 mt-1">Đã đăng ký sinh hoạt CLB</p>
-            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
           </div>
         </div>
 
         <!-- QUICK ACTIONS BAR -->
         <div class="flex flex-wrap gap-2.5">
-          <button onclick="openQuickAttendanceModal()" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-sm font-bold rounded-xl shadow-md transition">
-            <i data-lucide="zap" class="w-4 h-4 mr-2 text-amber-300"></i>
-            ⚡ Điểm danh nhanh
-          </button>
           <button onclick="switchTab('attendance')" class="inline-flex items-center px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-xl shadow-sm transition">
             <i data-lucide="user-check" class="w-4 h-4 mr-2"></i>
-            Điểm danh hôm nay
+            Điểm danh & Buổi cầu
           </button>
           <button onclick="openTopUpModal()" class="inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl shadow-sm transition">
             <i data-lucide="plus-circle" class="w-4 h-4 mr-2"></i>
@@ -320,104 +300,285 @@
       </section>
 
       <!-- ================= 2. TAB: ĐIỂM DANH & TÍNH TIỀN ================= -->
-      <section id="tab-attendance" class="tab-pane hidden space-y-6">
-        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-          <!-- Heading & Date selection -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+      <!-- ================= 2. TAB: BUỔI HOẠT ĐỘNG & ĐIỂM DANH (THEO MẪU ẢNH MOBILE) ================= -->
+      <section id="tab-attendance" class="tab-pane hidden pb-32 md:pb-12">
+        <div class="max-w-xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden relative">
+          
+          <!-- 1. TOP HEADER: < Buổi hoạt động mới  [ VI | EN ] -->
+          <div class="px-4 py-3.5 border-b border-slate-100 flex items-center justify-between bg-white sticky top-0 z-20">
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="switchTab('dashboard')" class="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700 transition" title="Quay lại Trang chủ">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+              </button>
+              <h2 class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Buổi hoạt động mới</h2>
+            </div>
+
+            <!-- Language switch toggle: VI | EN -->
+            <div class="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs font-bold border border-slate-200">
+              <button type="button" onclick="setActivityLanguage('VI')" id="actBtnLangVI" class="px-2.5 py-1 rounded-md bg-slate-900 text-white shadow-sm transition">VI</button>
+              <button type="button" onclick="setActivityLanguage('EN')" id="actBtnLangEN" class="px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 transition">EN</button>
+            </div>
+          </div>
+
+          <!-- FORM BODY (Cuộn mượt mà) -->
+          <div class="p-4 sm:p-5 space-y-6">
+
+            <!-- Banner Phân Quyền & Vai Trò Thao Tác Điểm Danh -->
+            <div id="actRolePermissionBanner" class="p-2.5 rounded-2xl border text-xs flex items-center justify-between transition shadow-2xs">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <!-- 2. FIELDS: Ngày & Loại -->
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Ngày</label>
+                <input type="date" id="actDateInput" onchange="onActivityDateChanged(this.value)" class="w-full text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2.5 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Loại</label>
+                <div class="relative">
+                  <select id="actTypeSelect" onchange="onActivityTypeChanged(this.value)" class="w-full text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2.5 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition appearance-none">
+                    <option value="Buổi cầu" selected>Buổi cầu</option>
+                    <option value="Giao lưu">Giao lưu</option>
+                    <option value="Giải đấu">Giải đấu</option>
+                    <option value="Tập luyện">Tập luyện</option>
+                  </select>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 absolute right-3 top-3 pointer-events-none"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. ĐIỂM DANH THÀNH VIÊN (KHOẢNG CÁCH THU NHỎ GỌN NHƯ MỤC KHÁCH, MẶC ĐỊNH CHƯA ĐIỂM DANH) -->
             <div>
-              <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="user-check" class="w-5 h-5 text-brand-600"></i>
-                Điểm danh & Tự tính tiền sân Cầu Lông
-              </h2>
-              <p class="text-xs text-slate-500 mt-0.5">Tự động cộng dồn số buổi trong tháng để tính đúng bậc tiền sân và tự động trừ vào ví</p>
-            </div>
-            
-            <div class="flex items-center gap-2">
-              <label for="attendanceDate" class="text-xs font-semibold text-slate-600">Ngày chơi:</label>
-              <input type="date" id="attendanceDate" onchange="onAttendanceDateChange()" class="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium" />
-            </div>
-          </div>
+              <div class="flex items-center justify-between pb-1">
+                <div class="flex items-center gap-1.5 font-black text-slate-900 text-sm">
+                  <span>Điểm danh</span>
+                  <span class="text-slate-400">·</span>
+                  <span id="actMemberCountBadge" class="text-emerald-700 font-extrabold text-base">0</span>
+                </div>
+                <div class="flex items-center gap-3 text-xs font-bold text-emerald-700">
+                  <button type="button" onclick="selectAllActivityMembers()" class="hover:underline">Chọn tất cả</button>
+                  <button type="button" onclick="deselectAllActivityMembers()" class="hover:underline">Bỏ chọn</button>
+                </div>
+              </div>
 
-          <!-- Bậc tiền sân current reminder -->
-          <div class="mt-4 p-3 bg-brand-50/70 border border-brand-200/60 rounded-xl flex flex-wrap items-center justify-between gap-2 text-xs">
-            <div class="flex items-center gap-2 text-brand-700 font-semibold">
-              <i data-lucide="info" class="w-4 h-4 shrink-0"></i>
-              <span>Biểu phí bậc tiền sân đang áp dụng:</span>
-            </div>
-            <div class="flex flex-wrap items-center gap-2 text-slate-700" id="attendanceTiersBadgeList">
-              <span class="bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs">0–4 buổi: <b class="text-emerald-600">50.000đ</b></span>
-              <span class="bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs">5–9 buổi: <b class="text-emerald-600">100.000đ</b></span>
-              <span class="bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs">10–15 buổi: <b class="text-emerald-600">150.000đ</b></span>
-              <span class="bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs">16+ buổi: <b class="text-emerald-600">200.000đ</b></span>
-            </div>
-          </div>
-
-          <!-- FILTER CATEGORY TABS -->
-          <div class="mt-5 flex items-center justify-between flex-wrap gap-3">
-            <div class="flex p-1 bg-slate-100 rounded-xl text-xs font-semibold space-x-1">
-              <button onclick="setAttendanceFilter('all')" id="filter-att-all" class="att-filter-btn px-3 py-1.5 rounded-lg bg-white shadow-sm text-slate-800">Tất cả</button>
-              <button onclick="setAttendanceFilter('official')" id="filter-att-official" class="att-filter-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Thành viên chính thức</button>
-              <button onclick="setAttendanceFilter('unofficial')" id="filter-att-unofficial" class="att-filter-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Không chính thức</button>
-              <button onclick="setAttendanceFilter('guest')" id="filter-att-guest" class="att-filter-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Khách giao lưu (A/B/C)</button>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <button onclick="openQuickAttendanceModal()" class="inline-flex items-center text-xs font-bold px-3.5 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl shadow-sm transition">
-                <i data-lucide="zap" class="w-3.5 h-3.5 mr-1.5 text-amber-300"></i>
-                ⚡ Điểm danh nhanh (1-chạm / Zalo)
-              </button>
-              <!-- Quick Add Guest button -->
-              <button onclick="openAddGuestModal()" class="inline-flex items-center text-xs font-semibold px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl border border-slate-200 transition">
-                <i data-lucide="user-plus" class="w-3.5 h-3.5 mr-1.5"></i>
-                Thêm khách nhanh
-              </button>
-            </div>
-          </div>
-
-          <!-- ATTENDANCE CHECKLIST TABLE -->
-          <div class="mt-4 border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-xs">
-                <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
-                  <tr>
-                    <th class="py-3 px-4 w-12 text-center">
-                      <input type="checkbox" id="checkAllAttendance" onchange="toggleSelectAllAttendance(this)" class="w-4 h-4 rounded text-brand-600 focus:ring-brand-500 cursor-pointer">
-                    </th>
-                    <th class="py-3 px-3">Họ và tên</th>
-                    <th class="py-3 px-2">Phân loại</th>
-                    <th class="py-3 px-2 text-center">Lũy kế tháng</th>
-                    <th class="py-3 px-3 text-right">Đơn giá áp dụng</th>
-                    <th class="py-3 px-3 text-right">Số dư ví hiện tại</th>
-                    <th class="py-3 px-3 text-center">Trạng thái ví</th>
-                  </tr>
-                </thead>
-                <tbody id="attendanceChecklistBody" class="divide-y divide-slate-100">
+              <!-- Hàng 1: Thành viên chính thức (6 trên cùng 1 hàng) -->
+              <div class="mt-1.5">
+                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 flex items-center justify-between">
+                  <span>Thành viên chính thức</span>
+                  <span id="actOfficialCountBadge" class="text-emerald-700 font-bold text-[11px]">0/20</span>
+                </div>
+                <!-- 6 cột dạng chip thu nhỏ gọn gàng -->
+                <div id="actOfficialMemberGrid" class="grid grid-cols-6 gap-1 text-center">
                   <!-- Rendered dynamically -->
-                </tbody>
-              </table>
+                </div>
+              </div>
+
+              <!-- Hàng 2: Thành viên danh dự (6 trên cùng 1 hàng) -->
+              <div class="mt-2.5 pt-2 border-t border-slate-100">
+                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 flex items-center justify-between">
+                  <span>Thành viên danh dự</span>
+                  <span id="actHonoraryCountBadge" class="text-purple-700 font-bold text-[11px]">0/7</span>
+                </div>
+                <!-- 6 cột dạng chip thu nhỏ gọn gàng -->
+                <div id="actHonoraryMemberGrid" class="grid grid-cols-6 gap-1 text-center">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
             </div>
+
+            <!-- 4. KHÁCH (HIỂN THỊ MỖI LEVEL TRÊN 1 DÒNG NHƯ TRƯỚC) -->
+            <div class="pt-3 border-t border-slate-100">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-1.5 font-black text-slate-900 text-sm">
+                  <span>Khách</span>
+                  <span class="text-slate-400">·</span>
+                  <span id="actGuestCountBadge" class="text-emerald-700 font-extrabold text-base">0</span>
+                </div>
+                <span class="text-[11px] text-slate-400 font-semibold bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200">1 dòng mỗi Level</span>
+              </div>
+
+              <!-- Danh sách khách hiển thị 1 dòng mỗi Level (Level A : THẾ ANH , PHONG , QUANG-Q) -->
+              <div id="actGuestLevelsContainer" class="space-y-2">
+                <!-- Rendered dynamically: Level A : THẾ ANH , PHONG , QUANG-Q -->
+              </div>
+
+              <!-- Thêm khách mới inline -->
+              <div class="mt-3 flex items-center gap-2">
+                <input type="text" id="newGuestNameInput" placeholder="Khách mới" class="flex-1 text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium" />
+                <select id="newGuestLevelSelect" class="text-xs border border-slate-200 rounded-xl px-2.5 py-2 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 font-semibold">
+                  <option value="UNRANKED">Chưa xếp hạng</option>
+                  <option value="GUEST_C">LEVEL C · 50.000đ</option>
+                  <option value="GUEST_B">LEVEL B · 70.000đ</option>
+                  <option value="GUEST_A">LEVEL A · 90.000đ</option>
+                </select>
+                <button type="button" onclick="addNewGuestInline()" class="w-9 h-9 shrink-0 bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 font-black rounded-xl flex items-center justify-center text-lg transition shadow-xs">
+                  +
+                </button>
+              </div>
+
+              <!-- Checkbox lưu vào danh sách khách -->
+              <div class="mt-3">
+                <label class="flex items-start gap-2 cursor-pointer">
+                  <input type="checkbox" id="saveGuestDebtCheckbox" onchange="toggleSaveGuestDebt(this.checked)" class="mt-0.5 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer" />
+                  <div>
+                    <span class="text-xs font-bold text-slate-800">Lưu vào danh sách khách</span>
+                    <p class="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                      Không bật thì khách chỉ tính cho buổi này – hợp với người chỉ đến một lần.<br>
+                      Khách không lưu luôn được tính là đã thu. Nếu khách còn nợ thì bật lưu để theo dõi công nợ.
+                    </p>
+                  </div>
+                </label>
+              </div>
+
+              <!-- 4C. DÒNG LƯU VÀ SỬA ĐIỂM DANH TẠM THỜI (ÁP DỤNG CHO THỐNG KÊ CÁC TRẬN CẦU) -->
+              <div id="actAttendanceSaveBar" class="mt-3 p-3 rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-between gap-2.5 flex-wrap shadow-2xs transition-all">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span id="actSaveStatusBadge" class="px-2 py-1 rounded-lg text-[10px] font-black bg-slate-200 text-slate-700 tracking-tight shrink-0 transition-colors">
+                    Chưa lưu tạm
+                  </span>
+                  <div class="min-w-0">
+                    <div id="actSaveCountText" class="text-xs font-black text-slate-800 truncate">0 người được chọn</div>
+                    <div id="actSaveNoteText" class="text-[10px] text-slate-400 truncate">Bấm "Lưu điểm danh" để nạp vào thống kê các trận cầu</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5 shrink-0">
+                  <button type="button" id="btnSaveTempAttendance" onclick="saveTemporaryAttendance()" class="px-3 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs shadow-xs flex items-center gap-1.5 transition active:scale-95 cursor-pointer">
+                    <span>💾</span>
+                    <span id="btnSaveTempAttendanceLabel">Lưu điểm danh</span>
+                  </button>
+                  <button type="button" id="btnEditTempAttendance" onclick="editAttendancePrompt()" class="px-2.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs shadow-2xs flex items-center gap-1 transition active:scale-95 cursor-pointer">
+                    <span>✏️</span>
+                    <span>Sửa / Bổ sung</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. CHI PHÍ (THEO ẢNH 1) -->
+            <div class="pt-4 border-t border-slate-100">
+              <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                  <h3 class="font-black text-slate-900 text-sm">Chi phí</h3>
+                  <div class="bg-slate-100/90 text-slate-700 text-xs font-bold px-3 py-1 rounded-xl flex items-center gap-2 border border-slate-200 shadow-2xs">
+                    <span>ĐƠN GIÁ THEO NGÀY 12 = 340.000đ</span>
+                    <button type="button" onclick="applyDailyRatePreset(340000)" class="text-[11px] font-bold text-emerald-700 hover:underline cursor-pointer">Áp dụng</button>
+                  </div>
+                </div>
+                <button type="button" onclick="addActivityExpenseRow()" class="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1">
+                  + Thêm dòng
+                </button>
+              </div>
+
+              <!-- Danh sách dòng chi phí -->
+              <div id="actExpenseRowsContainer" class="space-y-3">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- 6. KHOẢN ĐÓNG GÓP (THEO ẢNH 1) -->
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+              <h3 class="font-black text-slate-900 text-sm">Khoản đóng góp</h3>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Người ứng tiền</label>
+                  <select id="actFrontPersonSelect" onchange="onFrontPersonChanged(this.value)" class="w-full text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2.5 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <option value="NONE">Không ai</option>
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <label class="text-xs font-bold text-slate-700">Ứng trước</label>
+                    <label class="flex items-center gap-1 text-xs text-slate-600 font-semibold cursor-pointer">
+                      <input type="checkbox" id="actFrontAllCheckbox" onchange="onFrontAllToggled(this.checked)" class="w-3.5 h-3.5 rounded text-emerald-600 focus:ring-emerald-500">
+                      <span>Tất cả</span>
+                    </label>
+                  </div>
+                  <input type="number" id="actFrontAmountInput" value="0" min="0" step="10000" oninput="onFrontAmountChanged(this.value)" class="w-full text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2.5 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                </div>
+              </div>
+
+
+            </div>
+
+            <!-- 6. THỐNG KÊ CÁC TRẬN CẦU (THAY THẾ MỤC GHI CHÚ) -->
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <h3 class="font-black text-slate-900 text-sm">Thống kê các trận cầu</h3>
+                  <span id="actMatchCountBadge" class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full text-[10px] font-black">0 trận</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="randomActivityMatch()" class="text-xs font-bold px-2.5 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-xl border border-purple-200 transition" title="Bốc thăm ngẫu nhiên 4 người có mặt">
+                    🎲 Bốc ngẫu nhiên
+                  </button>
+                  <button type="button" onclick="addActivityMatch()" class="text-xs font-bold px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl border border-emerald-200 transition">
+                    + Thêm trận
+                  </button>
+                </div>
+              </div>
+
+              <!-- Thống kê tần suất vào sân của từng người -->
+              <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                  <span>Số trận đã đấu trong buổi (tính theo người có mặt)</span>
+                </div>
+                <div id="actMemberMatchStatsBar" class="flex flex-wrap gap-1 text-xs">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+
+              <!-- BẢNG DÒNG KẾT QUẢ CÁC TRẬN ĐẤU (HIỂN THỊ TỈ SỐ THEO CẶP) -->
+              <div id="actMatchLinesSummaryCard" class="bg-emerald-50/80 p-3 rounded-2xl border border-emerald-200/90 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="text-[11px] font-black text-emerald-950 uppercase tracking-wide flex items-center gap-1.5">
+                    <span>⚡</span>
+                    <span>Kết quả các dòng trận đấu (Tỉ số theo cặp):</span>
+                  </div>
+                  <span class="text-[10px] text-emerald-700 font-semibold italic">Tự động cập nhật khi nhập điểm</span>
+                </div>
+                <div id="actMatchLinesSummary" class="space-y-1.5 text-xs">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+
+              <!-- Danh sách từng trận đấu (Trận 1: A+B vs C+D, Trận 2: A+C vs C+E...) -->
+              <div id="actMatchesContainer" class="space-y-3">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
           </div>
 
-          <!-- SUMMARY & CONFIRM ACTIONS -->
-          <div class="mt-5 p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-4 text-xs">
+          <!-- 7. THANH TỔNG KẾT & CHIA TIỀN (STICKY BOTTOM BAR DÍNH ĐÁY) -->
+          <div class="sticky bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 p-4 shadow-xl z-30">
+            <!-- 3 Chỉ số: Tổng chi phí | Khách đóng | Cần chia -->
+            <div class="grid grid-cols-3 gap-2 pb-3 text-xs">
               <div>
-                <span class="text-slate-500">Đã chọn có mặt:</span>
-                <b id="selectedAttendanceCount" class="text-slate-900 text-sm ml-1 font-bold">0 người</b>
+                <span class="text-slate-400 block text-[11px]">Tổng chi phí</span>
+                <b id="actSummaryTotalCost" class="text-slate-900 font-extrabold text-sm sm:text-base">0đ</b>
               </div>
-              <div class="w-px h-5 bg-slate-300"></div>
               <div>
-                <span class="text-slate-500">Tổng tiền sân thu dự tính:</span>
-                <b id="selectedAttendanceTotalAmount" class="text-brand-700 text-base font-black ml-1">0 đ</b>
+                <span class="text-slate-400 block text-[11px]">Khách đóng</span>
+                <b id="actSummaryGuestPaid" class="text-slate-900 font-extrabold text-sm sm:text-base">0đ</b>
+              </div>
+              <div>
+                <span class="text-slate-400 block text-[11px]">Cần chia</span>
+                <b id="actSummaryNeedSplit" class="text-slate-900 font-extrabold text-sm sm:text-base">0đ</b>
               </div>
             </div>
 
-            <div class="flex items-center gap-3 w-full sm:w-auto">
-              <button onclick="confirmAttendanceAndDeduct()" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold rounded-xl shadow-md transition cursor-pointer">
-                <i data-lucide="check-circle-2" class="w-5 h-5 mr-2"></i>
-                Xác nhận điểm danh & Tự trừ tiền ví
-              </button>
-            </div>
+            <!-- Nút lớn màu xanh lá: Lưu và chia tiền  0đ / mỗi người -->
+            <button type="button" onclick="saveAndSplitActivitySession()" class="w-full bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white font-black py-3.5 px-4 rounded-2xl shadow-lg shadow-emerald-700/20 flex items-center justify-between transition cursor-pointer">
+              <span class="text-sm sm:text-base">Lưu và chia tiền</span>
+              <span id="actSummaryPerPersonBadge" class="bg-emerald-800/80 border border-emerald-600/60 px-3 py-1 rounded-xl text-xs sm:text-sm font-bold">
+                0đ / mỗi người
+              </span>
+            </button>
           </div>
 
         </div>
@@ -541,8 +702,9 @@
                 <i data-lucide="user-plus" class="w-3.5 h-3.5 mr-1.5"></i>
                 + Thành viên chính thức
               </button>
-              <button onclick="openMemberModal('unofficial')" class="inline-flex items-center px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl border border-slate-200 transition">
-                + Không chính thức
+              <button onclick="openMemberModal('honorary')" class="inline-flex items-center px-3.5 py-2 bg-purple-50 hover:bg-purple-100 text-purple-800 text-xs font-semibold rounded-xl border border-purple-200 transition">
+                <i data-lucide="award" class="w-3.5 h-3.5 mr-1.5 text-purple-600"></i>
+                + Thành viên danh dự
               </button>
               <button onclick="openAddGuestModal()" class="inline-flex items-center px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl border border-slate-200 transition">
                 + Khách A/B/C
@@ -555,7 +717,7 @@
             <div class="flex p-1 bg-slate-100 rounded-xl text-xs font-semibold space-x-1 w-full sm:w-auto">
               <button onclick="setMemberListFilter('ALL')" id="filter-mem-all" class="mem-filter-btn px-3 py-1.5 rounded-lg bg-white shadow-sm text-slate-800">Tất cả</button>
               <button onclick="setMemberListFilter('OFFICIAL')" id="filter-mem-official" class="mem-filter-btn px-3 py-1.5 rounded-lg text-slate-600">Chính thức</button>
-              <button onclick="setMemberListFilter('UNOFFICIAL')" id="filter-mem-unofficial" class="mem-filter-btn px-3 py-1.5 rounded-lg text-slate-600">Không chính thức</button>
+              <button onclick="setMemberListFilter('HONORARY')" id="filter-mem-honorary" class="mem-filter-btn px-3 py-1.5 rounded-lg text-slate-600">Thành viên danh dự</button>
               <button onclick="setMemberListFilter('GUEST')" id="filter-mem-guest" class="mem-filter-btn px-3 py-1.5 rounded-lg text-slate-600">Khách giao lưu</button>
             </div>
 
@@ -589,57 +751,211 @@
         </div>
       </section>
 
-      <!-- ================= 5. TAB: BỐC THĂM CHIA SÂN CẦU LÔNG ================= -->
+      <!-- ================= 5. TAB: BỐC THĂM CHIA SÂN & LỊCH THI ĐẤU TRANH GIẢI ================= -->
       <section id="tab-matchmaker" class="tab-pane hidden space-y-6">
-        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-          <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+          
+          <!-- Header & Mode Switcher -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
             <div>
               <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
                 <i data-lucide="shuffle" class="w-5 h-5 text-brand-600"></i>
-                Bốc thăm Chia sân & Cặp đấu Cầu Lông (Matchmaker)
+                Bốc thăm Chia sân & Lịch Thi Đấu Tranh Giải CLB
               </h2>
-              <p class="text-xs text-slate-500 mt-0.5">Tự động chọn các bạn có mặt hôm nay để ghép cặp Đánh Đôi (2 vs 2) hoặc Đánh Đơn (1 vs 1)</p>
+              <p class="text-xs text-slate-500 mt-0.5">Bốc thăm chia sân giao lưu hoặc chia thành Nhánh A & Nhánh B tạo lịch thi đấu tranh giải CLB</p>
+            </div>
+            
+            <!-- Switch mode: Regular vs Tournament -->
+            <div class="flex items-center p-1 bg-slate-100 rounded-xl text-xs font-bold space-x-1 shrink-0 self-start sm:self-auto">
+              <button type="button" onclick="switchMatchmakerMode('REGULAR')" id="btnMatchmakerModeRegular" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer">
+                🏸 Giao lưu ngày thường
+              </button>
+              <button type="button" onclick="switchMatchmakerMode('TOURNAMENT')" id="btnMatchmakerModeTournament" class="px-3 py-1.5 rounded-lg bg-white text-purple-900 shadow-xs border border-purple-200 transition cursor-pointer flex items-center gap-1.5 font-black">
+                <span>🏆</span>
+                <span>Giải Đấu CLB (Nhánh A & B)</span>
+              </button>
             </div>
           </div>
 
-          <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <!-- Left: Select players present -->
-            <div class="lg:col-span-5 border border-slate-200 rounded-xl p-4 bg-slate-50">
-              <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-bold text-slate-700">Chọn người có mặt trên sân:</span>
-                <button onclick="selectAllForMatchmaking()" class="text-xs text-brand-700 font-semibold hover:underline">Chọn tất cả</button>
-              </div>
-              <div id="matchmakerPlayersList" class="max-h-80 overflow-y-auto space-y-1.5 pr-1 text-xs">
-                <!-- Rendered dynamically -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left: Select players & Tournament settings -->
+            <div class="lg:col-span-5 border border-slate-200 rounded-xl p-4 bg-slate-50 space-y-4">
+              
+              <!-- Chọn người chơi -->
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-slate-800 flex items-center gap-1">
+                    <i data-lucide="users" class="w-3.5 h-3.5 text-slate-500"></i>
+                    <span>Chọn người tham gia:</span>
+                  </span>
+                  <div class="flex items-center gap-1.5 text-[11px]">
+                    <button type="button" onclick="selectAllForMatchmaking()" class="text-brand-700 font-bold hover:underline cursor-pointer">Tất cả</button>
+                    <span class="text-slate-300">|</span>
+                    <button type="button" onclick="selectAttendedPlayersForMatchmaking()" class="text-emerald-700 font-bold hover:underline cursor-pointer" title="Chọn những người đã điểm danh có mặt trong hoạt động">Đã điểm danh</button>
+                    <span class="text-slate-300">|</span>
+                    <button type="button" onclick="deselectAllForMatchmaking()" class="text-slate-400 font-medium hover:underline cursor-pointer">Bỏ chọn</button>
+                  </div>
+                </div>
+                <div id="matchmakerPlayersList" class="max-h-72 overflow-y-auto space-y-1.5 pr-1 text-xs">
+                  <!-- Rendered dynamically -->
+                </div>
               </div>
               
-              <!-- Match options -->
-              <div class="mt-4 pt-3 border-t border-slate-200 space-y-3">
+              <!-- Controls for Regular Mode -->
+              <!-- Controls for Regular Mode -->
+              <div id="matchmakerRegularControls" class="pt-3 border-t border-slate-200 space-y-3 hidden">
                 <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">Thể thức thi đấu:</label>
-                  <select id="matchFormatSelect" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white focus:outline-none">
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Thể thức thi đấu giao lưu:</label>
+                  <select id="matchFormatSelect" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white focus:outline-none font-semibold">
                     <option value="DOUBLES">Đánh Đôi (2 vs 2 - 4 người / sân)</option>
                     <option value="SINGLES">Đánh Đơn (1 vs 1 - 2 người / sân)</option>
                   </select>
                 </div>
                 
-                <button onclick="generateBadmintonMatches()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
-                  <i data-lucide="play" class="w-4 h-4"></i>
-                  Tạo lượt đấu ngẫu nhiên
-                </button>
+                <div class="grid grid-cols-2 gap-2">
+                  <button type="button" onclick="generateBadmintonMatches('RANDOM')" class="py-2.5 px-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm active:scale-98 cursor-pointer">
+                    <i data-lucide="shuffle" class="w-4 h-4"></i>
+                    🎲 Bốc ngẫu nhiên
+                  </button>
+                  <button type="button" onclick="generateBadmintonMatches('MANUAL')" class="py-2.5 px-2 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm active:scale-98 cursor-pointer">
+                    <i data-lucide="edit-3" class="w-4 h-4"></i>
+                    ✍️ Xếp sân thủ công
+                  </button>
+                </div>
               </div>
+
+              <!-- Controls for Tournament Mode (Nhánh A & B) -->
+              <div id="matchmakerTournamentControls" class="pt-3 border-t border-slate-200 space-y-3">
+                <div class="p-2.5 bg-purple-50/80 rounded-xl border border-purple-200 text-purple-900 space-y-1">
+                  <div class="text-[11px] font-black uppercase flex items-center gap-1">
+                    <span>🏆</span>
+                    <span>Cấu hình Giải Đấu Tranh Cúp CLB</span>
+                  </div>
+                  <p class="text-[10px] text-purple-700">Hệ thống hỗ trợ <b>Bốc thăm ngẫu nhiên</b> hoặc <b>Xếp nhánh thủ công</b> vào <b>Nhánh A</b> & <b>Nhánh B</b>, tự động lập lịch thi đấu.</p>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Tên giải đấu:</label>
+                  <input type="text" id="tournamentTitleInput" value="Giải Cầu Lông Tranh Cúp Nội Bộ CLB" class="w-full px-3 py-2 text-xs font-bold border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-1 focus:ring-purple-500" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Thể thức tranh giải:</label>
+                  <select id="tournamentFormatSelect" onchange="if(matchmakerState.drawMethod==='MANUAL') initManualTournamentTeams();" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white focus:outline-none font-semibold">
+                    <option value="DOUBLES">Đánh Đôi (2 vs 2) - Ghép cặp bốc thăm</option>
+                    <option value="SINGLES">Đánh Đơn (1 vs 1) - Thi đấu cá nhân</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Thể thức thi đấu:</label>
+                  <select id="tournamentSystemSelect" class="w-full px-3 py-2 text-xs border border-purple-200 rounded-xl bg-purple-50/40 text-purple-950 font-bold focus:outline-none">
+                    <option value="KNOCKOUT" selected>⚡ Đấu Loại Trực Tiếp (Knockout - Nhánh A & B)</option>
+                    <option value="ROUND_ROBIN">🔄 Vòng Tròn Chia Bảng + Bán Kết & Chung Kết</option>
+                  </select>
+                </div>
+
+                <!-- Phương thức chia nhánh: Ngẫu nhiên vs Thủ công -->
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Phương thức bốc thăm / phân nhánh:</label>
+                  <div class="grid grid-cols-2 gap-2 p-1 bg-slate-200/70 rounded-xl text-xs font-bold">
+                    <button type="button" id="btnTourMethodRandom" onclick="switchTournamentDrawMethod('RANDOM')" class="py-2 px-2.5 rounded-lg bg-white text-purple-900 shadow-xs border border-purple-200 flex items-center justify-center gap-1.5 transition cursor-pointer font-black">
+                      <span>🎲</span>
+                      <span>Bốc Ngẫu Nhiên</span>
+                    </button>
+                    <button type="button" id="btnTourMethodManual" onclick="switchTournamentDrawMethod('MANUAL')" class="py-2 px-2.5 rounded-lg text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5 transition cursor-pointer font-semibold">
+                      <span>✍️</span>
+                      <span>Xếp Thủ Công</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Cơ cấu giải thưởng -->
+                <div class="space-y-1.5 bg-white p-2.5 rounded-xl border border-slate-200 text-xs">
+                  <span class="text-[10px] font-black text-slate-500 uppercase tracking-tight block">🎁 Cơ cấu giải thưởng:</span>
+                  <div class="space-y-1">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-xs shrink-0">🥇 Nhất:</span>
+                      <input type="text" id="tournamentPrize1" value="🏆 Cúp Vô Địch + 1 Tháp bia + 4 Bò húc" class="w-full text-[11px] font-bold text-amber-900 border border-slate-200 rounded-lg px-2 py-1 bg-amber-50/50" />
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-xs shrink-0">🥈 Nhì:</span>
+                      <input type="text" id="tournamentPrize2" value="🥈 2 Lốc bò húc / nước ngọt" class="w-full text-[11px] font-bold text-slate-700 border border-slate-200 rounded-lg px-2 py-1 bg-slate-50" />
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-xs shrink-0">🥉 Ba:</span>
+                      <input type="text" id="tournamentPrize3" value="🥉 1 Ống cầu lông thi đấu" class="w-full text-[11px] font-bold text-slate-700 border border-slate-200 rounded-lg px-2 py-1 bg-slate-50" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Random Action Button Block -->
+                <div id="tourMethodRandomBlock" class="space-y-2">
+                  <button type="button" onclick="generateClubTournamentBracket()" class="w-full py-3 bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-800 hover:from-purple-800 hover:to-indigo-800 text-white font-black text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-md active:scale-98 cursor-pointer">
+                    <i data-lucide="trophy" class="w-4 h-4"></i>
+                    🏆 BỐC THĂM & TẠO LỊCH ĐẤU (KNOCKOUT)
+                  </button>
+                  <p class="text-[10px] text-slate-500 text-center italic">Hệ thống tự động xáo trộn ngẫu nhiên và phân bổ đều vào Nhánh A & B.</p>
+                </div>
+
+                <!-- Manual Builder Container Block -->
+                <div id="tourMethodManualBlock" class="space-y-3 hidden">
+                  <div class="p-2.5 bg-amber-50/90 rounded-xl border border-amber-200 text-amber-900 space-y-1">
+                    <div class="text-[10px] font-black uppercase flex items-center gap-1">
+                      <span>✍️</span>
+                      <span>Xếp Thủ Công Từng Cặp Nhánh A & B</span>
+                    </div>
+                    <p class="text-[10px] text-amber-800">Chọn trực tiếp thành viên cho từng cặp ở <b>Nhánh A</b> và <b>Nhánh B</b>, bấm <b>+ Thêm cặp</b> hoặc <b>⇄ Chuyển nhánh</b> tùy ý.</p>
+                  </div>
+
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="text-xs font-bold text-slate-700">Các cặp thi đấu:</span>
+                    <button type="button" onclick="initManualTournamentTeams()" class="py-1 px-2.5 bg-purple-100 hover:bg-purple-200 text-purple-900 font-bold text-[11px] rounded-lg border border-purple-300 transition flex items-center gap-1 cursor-pointer" title="Ghép nhanh các cặp từ danh sách thành viên đã chọn bên trái">
+                      <span>⚡</span> Ghép nhanh từ người chọn
+                    </button>
+                  </div>
+
+                  <!-- 2 Columns or List for Manual Branch A and Branch B -->
+                  <div id="manualTeamsListContainer" class="space-y-2.5">
+                    <!-- Rendered dynamically -->
+                  </div>
+
+                  <button type="button" onclick="generateManualClubTournamentBracket()" class="w-full py-3 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-md active:scale-98 cursor-pointer">
+                    <i data-lucide="trophy" class="w-4 h-4"></i>
+                    🏆 TẠO LỊCH ĐẤU LOẠI TRỰC TIẾP (KNOCKOUT)
+                  </button>
+                </div>
+
+              </div>
+
             </div>
 
-            <!-- Right: Match displays -->
-            <div class="lg:col-span-7">
-              <div class="flex items-center justify-between mb-3">
-                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Lượt thi đấu trên sân</h4>
-                <span id="matchStatsBadge" class="text-xs text-slate-500 font-medium"></span>
+            <!-- Right: Tournament Schedule & Match displays -->
+            <div class="lg:col-span-7 space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <h4 id="matchmakerRightTitle" class="text-xs font-black text-slate-900 uppercase tracking-wider">Lịch Thi Đấu Tranh Giải CLB</h4>
+                  <span id="matchStatsBadge" class="text-xs text-slate-500 font-medium"></span>
+                </div>
+                
+                <!-- Quick actions when schedule generated -->
+                <div id="tournamentActionToolbar" class="flex items-center gap-1.5 hidden">
+                  <button type="button" onclick="copyTournamentToClipboard()" class="px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-lg text-xs font-bold flex items-center gap-1 transition shadow-2xs" title="Sao chép văn bản lịch thi đấu để dán vào nhóm Zalo">
+                    <span>📋</span>
+                    <span>Copy gửi Zalo</span>
+                  </button>
+                  <button type="button" onclick="syncTournamentToActivity()" class="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-lg text-xs font-bold flex items-center gap-1 transition shadow-2xs" title="Nạp toàn bộ các trận đấu này vào Buổi hoạt động để theo dõi và tính tiền">
+                    <span>📥</span>
+                    <span>Nạp vào Buổi HĐ</span>
+                  </button>
+                </div>
               </div>
+
               <div id="matchesOutputArea" class="space-y-4">
-                <div class="p-8 text-center text-slate-400 border-2 border-dashed border-slate-200 rounded-2xl text-xs">
-                  <i data-lucide="dice-5" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
-                  Vui lòng tích chọn danh sách hội viên bên trái và nhấn "Tạo lượt đấu ngẫu nhiên"
+                <div class="p-8 text-center text-slate-400 border-2 border-dashed border-slate-200 rounded-2xl text-xs space-y-2">
+                  <i data-lucide="trophy" class="w-10 h-10 mx-auto text-purple-400 opacity-70"></i>
+                  <div class="font-bold text-slate-700">Chưa có lịch thi đấu giải</div>
+                  <p class="text-slate-400 max-w-sm mx-auto">Chọn các thành viên tham gia bên trái, sau đó nhấn nút <b>"🏆 Bốc thăm Nhánh A & B & Tạo lịch đấu"</b> để phân chia nhánh và tạo lịch thi đấu tranh giải CLB!</p>
                 </div>
               </div>
             </div>
@@ -692,6 +1008,161 @@
           <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
             <button onclick="saveGeneralConfig()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition">
               Lưu thông tin CLB
+            </button>
+          </div>
+        </div>
+
+        <!-- Phân quyền Quản lý CLB: Trưởng nhóm & Phó nhóm -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100 flex-wrap gap-2">
+            <div>
+              <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="shield-check" class="w-5 h-5 text-brand-600"></i>
+                Phân Quyền Quản Lý CLB (Trưởng Nhóm & Phó Nhóm)
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">Trưởng nhóm quản lý toàn quyền và được phép cấp/hủy quyền cho Phó nhóm</p>
+            </div>
+            <span class="px-2.5 py-1 bg-amber-50 text-amber-900 border border-amber-200 rounded-full text-xs font-black flex items-center gap-1">
+              <span>👑</span>
+              <span>Trưởng nhóm toàn quyền</span>
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Chọn vai trò thao tác hiện tại (Role Switcher) -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+              <label class="block text-xs font-bold text-slate-700">Vai trò đang đăng nhập / Thử nghiệm quyền:</label>
+              <select id="configActiveRoleSelect" onchange="switchActiveUserRole(this.value)" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <option value="ADMIN">👑 Trưởng nhóm (Toàn quyền quản trị CLB)</option>
+                <option value="VICE_ADMIN">🛡️ Phó nhóm (Phó chủ nhiệm CLB)</option>
+                <option value="MEMBER">👤 Thành viên thường (Chỉ xem cá nhân)</option>
+              </select>
+              <p class="text-[10px] text-slate-400 italic">Dễ dàng đổi vai trò để kiểm tra phân quyền thực tế trên hệ thống.</p>
+            </div>
+
+            <!-- Chỉ định thành viên làm Phó nhóm -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+              <label class="block text-xs font-bold text-slate-700">Chỉ định Phó nhóm CLB:</label>
+              <select id="configViceLeaderSelect" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <!-- Rendered dynamically from members list -->
+              </select>
+              <p class="text-[10px] text-slate-400 italic">Thành viên được phân công làm Phó chủ nhiệm hỗ trợ ban cán sự.</p>
+            </div>
+          </div>
+
+          <!-- Danh sách phân quyền hạn cấp cho Phó nhóm -->
+          <div class="p-3.5 bg-gradient-to-r from-blue-50/70 to-indigo-50/70 rounded-xl border border-blue-200 space-y-2.5">
+            <div class="text-xs font-bold text-blue-950 flex items-center gap-1.5">
+              <span>🔑</span>
+              <span>Quyền hạn Trưởng nhóm cấp cho Phó nhóm:</span>
+            </div>
+
+            <div class="space-y-2 text-xs text-slate-700">
+              <label class="flex items-start gap-2.5 cursor-pointer bg-white p-2.5 rounded-xl border border-blue-100 shadow-2xs hover:bg-blue-50/40 transition">
+                <input type="checkbox" id="permViceLeaderAttendance" checked class="mt-0.5 w-4 h-4 rounded text-brand-600 focus:ring-brand-500 cursor-pointer" />
+                <div>
+                  <b class="text-slate-900 block">Cấp quyền cho Phó nhóm thực hiện thông tin điểm danh</b>
+                  <span class="text-[11px] text-slate-500">Khi bật, Phó nhóm được phép tích chọn thành viên, điểm danh buổi cầu và lưu điểm danh. Nếu tắt, Phó nhóm chỉ được xem.</span>
+                </div>
+              </label>
+
+              <label class="flex items-start gap-2.5 cursor-pointer bg-white p-2.5 rounded-xl border border-blue-100 shadow-2xs hover:bg-blue-50/40 transition">
+                <input type="checkbox" id="permViceLeaderTournamentSync" checked class="mt-0.5 w-4 h-4 rounded text-brand-600 focus:ring-brand-500 cursor-pointer" />
+                <div>
+                  <b class="text-slate-900 block">Cấp quyền nạp lịch thi đấu giải vào Buổi hoạt động</b>
+                  <span class="text-[11px] text-slate-500">Cho phép Phó nhóm đồng bộ các trận đấu bốc thăm giải vào buổi sinh hoạt để tính chi phí.</span>
+                </div>
+              </label>
+
+              <div class="flex items-center gap-2 p-2 bg-slate-100/80 rounded-lg text-[11px] text-slate-600">
+                <span>🔒</span>
+                <span><b>Quyền tối cao:</b> Quản lý Quỹ CLB, nạp tiền ví, đổi cấu hình và cấp quyền chỉ thuộc về <b>Trưởng nhóm</b>.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2 flex justify-end">
+            <button type="button" onclick="saveClubPermissionsConfig()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="check" class="w-4 h-4"></i>
+              Lưu phân quyền quản lý
+            </button>
+          </div>
+        </div>
+
+        <!-- Quỹ CLB Thành Viên Chính Thức (Chu kỳ tháng) -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100 flex-wrap gap-2">
+            <div>
+              <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="wallet" class="w-5 h-5 text-brand-600"></i>
+                Quỹ CLB Thành Viên Chính Thức (Chu Kỳ Tháng)
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">Quy định mức đóng quỹ định kỳ hàng tháng đối với thành viên chính thức</p>
+            </div>
+            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-900 border border-emerald-200 rounded-full text-xs font-black">
+              50.000 VNĐ / tháng
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Mức thu quỹ tháng (VNĐ/thành viên):</label>
+              <div class="flex items-center gap-2">
+                <input type="number" id="configMonthlyFundFee" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-bold text-slate-900" value="50000" step="5000" />
+                <span class="text-xs text-slate-500 font-bold">VNĐ</span>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Chu kỳ thu quỹ:</label>
+              <select id="configFundCycle" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-semibold text-slate-800">
+                <option value="MONTHLY" selected>Hàng tháng (Chu kỳ 1 tháng)</option>
+                <option value="QUARTERLY">Hàng quý (Chu kỳ 3 tháng)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Đối tượng áp dụng:</label>
+              <div class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-emerald-800 flex items-center justify-between">
+                <span>Thành viên chính thức</span>
+                <span class="px-2 py-0.5 bg-emerald-100 rounded-full text-[11px]">20 TV</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tác vụ thu quỹ tháng này -->
+          <div class="p-3.5 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl border border-emerald-200 space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div>
+                <div class="text-xs font-black text-emerald-950 flex items-center gap-1.5 uppercase">
+                  <span>⚡</span>
+                  <span id="monthlyFundCurrentMonthTitle">Thu Quỹ CLB Tháng Hiện Tại</span>
+                </div>
+                <p class="text-[11px] text-emerald-800 mt-0.5">Tự động trừ mức quỹ quy định vào ví của 20 thành viên chính thức và nạp trực tiếp vào Quỹ CLB.</p>
+              </div>
+
+              <button type="button" onclick="collectMonthlyFundForOfficialMembers()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-700 to-teal-700 hover:from-emerald-800 hover:to-teal-800 text-white font-black text-xs rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                <span>⚡</span>
+                <span>Thu Quỹ Tháng Này (50.000đ/TV)</span>
+              </button>
+            </div>
+
+            <!-- Thống kê nộp quỹ tháng của các thành viên chính thức -->
+            <div class="pt-2 border-t border-emerald-200/80 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-emerald-900">Tiến độ thu quỹ tháng:</span>
+                <span id="monthlyFundCollectedProgressBadge" class="font-black text-emerald-800 bg-white px-2 py-0.5 rounded-full border border-emerald-200">20 / 20 TV</span>
+              </div>
+              <div id="monthlyFundMembersStatusList" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-1.5 max-h-48 overflow-y-auto pr-1">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2 flex justify-end">
+            <button type="button" onclick="saveMonthlyFundConfig()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="check" class="w-4 h-4"></i>
+              Lưu cấu hình quỹ tháng
             </button>
           </div>
         </div>
@@ -797,27 +1268,27 @@
     </main>
   </div>
 
-  <!-- MOBILE BOTTOM NAVIGATION -->
+  <!-- MOBILE BOTTOM NAVIGATION (CHÍNH XÁC THEO ẢNH CHỤP 5 TAB) -->
   <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-2 py-1.5 flex justify-around items-center z-40 shadow-lg">
-    <button onclick="switchTab('dashboard')" id="m-nav-dashboard" class="flex flex-col items-center py-1 text-[11px] font-semibold text-brand-700">
-      <i data-lucide="layout-dashboard" class="w-5 h-5 mb-0.5"></i>
+    <button onclick="switchTab('dashboard')" id="m-nav-dashboard" class="flex flex-col items-center py-1 text-[11px] font-semibold text-emerald-700">
+      <i data-lucide="home" class="w-5 h-5 mb-0.5"></i>
       <span>Trang chủ</span>
     </button>
     <button onclick="switchTab('attendance')" id="m-nav-attendance" class="flex flex-col items-center py-1 text-[11px] font-semibold text-slate-500">
-      <i data-lucide="user-check" class="w-5 h-5 mb-0.5"></i>
-      <span>Điểm danh</span>
+      <i data-lucide="calendar" class="w-5 h-5 mb-0.5"></i>
+      <span>Hoạt động</span>
     </button>
     <button onclick="switchTab('finance')" id="m-nav-finance" class="flex flex-col items-center py-1 text-[11px] font-semibold text-slate-500">
-      <i data-lucide="wallet" class="w-5 h-5 mb-0.5"></i>
-      <span>Tài chính</span>
+      <i data-lucide="bar-chart-3" class="w-5 h-5 mb-0.5"></i>
+      <span>Sổ quỹ</span>
     </button>
     <button onclick="switchTab('members')" id="m-nav-members" class="flex flex-col items-center py-1 text-[11px] font-semibold text-slate-500">
       <i data-lucide="users" class="w-5 h-5 mb-0.5"></i>
-      <span>Hội viên</span>
+      <span>Thành viên</span>
     </button>
     <button onclick="switchTab('settings')" id="m-nav-settings" class="flex flex-col items-center py-1 text-[11px] font-semibold text-slate-500">
-      <i data-lucide="settings" class="w-5 h-5 mb-0.5"></i>
-      <span>Cấu hình</span>
+      <i data-lucide="user" class="w-5 h-5 mb-0.5"></i>
+      <span>Cá nhân</span>
     </button>
   </div>
 
@@ -1095,7 +1566,7 @@
           <label class="block text-xs font-semibold text-slate-700 mb-1">Phân loại hội viên:</label>
           <select id="memberTypeSelect" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none">
             <option value="OFFICIAL">Thành viên chính thức (Official)</option>
-            <option value="UNOFFICIAL">Thành viên không chính thức / Tập sự</option>
+            <option value="HONORARY">Thành viên danh dự (Honorary)</option>
           </select>
         </div>
 
@@ -1243,7 +1714,7 @@
           <label class="block text-xs font-semibold text-slate-700 mb-1">Phân loại hội viên:</label>
           <select id="quickRenameType" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none font-medium">
             <option value="OFFICIAL">Thành viên chính thức (Official)</option>
-            <option value="UNOFFICIAL">Thành viên không chính thức / Tập sự</option>
+            <option value="HONORARY">Thành viên danh dự (Honorary)</option>
             <option value="GUEST_A">Khách giao lưu Loại A</option>
             <option value="GUEST_B">Khách giao lưu Loại B</option>
             <option value="GUEST_C">Khách giao lưu Loại C</option>
@@ -1351,12 +1822,12 @@
               </div>
               <p class="text-[11px] text-emerald-700 mt-1">Tự động trừ ví tất cả hội viên chính thức</p>
             </button>
-            <button onclick="executeQaGroup('UNOFFICIAL')" class="p-3.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-2xl text-left transition">
-              <div class="font-bold text-amber-900 text-xs flex items-center gap-1.5">
-                <i data-lucide="users" class="w-4 h-4 text-amber-600"></i>
-                Toàn bộ Thành viên Tập sự
+            <button onclick="executeQaGroup('HONORARY')" class="p-3.5 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-2xl text-left transition">
+              <div class="font-bold text-purple-900 text-xs flex items-center gap-1.5">
+                <i data-lucide="award" class="w-4 h-4 text-purple-600"></i>
+                Toàn bộ Thành viên Danh dự
               </div>
-              <p class="text-[11px] text-amber-700 mt-1">Tự động trừ ví tất cả hội viên tập sự</p>
+              <p class="text-[11px] text-purple-700 mt-1">Tự động trừ ví tất cả hội viên danh dự</p>
             </button>
           </div>
         </div>

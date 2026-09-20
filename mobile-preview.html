@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mô Phỏng Giao Diện Điện Thoại - CLB Cầu Lông</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    /* Mobile screen scrollbar */
+    .mobile-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .mobile-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .mobile-scroll::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.15);
+      border-radius: 999px;
+    }
+    .phone-shadow {
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.3), 0 0 0 12px #1e293b, 0 0 0 14px #334155;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen py-8 px-4 flex flex-col items-center justify-start antialiased">
+
+  <!-- TOP CONTROLS & HEADER -->
+  <div class="text-center max-w-xl mb-6">
+    <div class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 rounded-full text-xs font-bold mb-2">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      Mô Phỏng Giao Diện Mobile Responsive
+    </div>
+    <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">CLB CẦU LÔNG SMASH (MOBILE VIEW)</h1>
+    <p class="text-xs text-slate-400 mt-1">Giao diện thực tế khi mở trên điện thoại (iPhone, Samsung, Xiaomi...)</p>
+
+    <!-- DEVICE SWITCHER BUTTONS -->
+    <div class="flex flex-wrap items-center justify-center gap-2 mt-4">
+      <button onclick="setDeviceSize(390, 800, 'iPhone 15 Pro (390px)')" id="btn-dev-iphone" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow transition">
+        📱 iPhone (390px)
+      </button>
+      <button onclick="setDeviceSize(360, 780, 'Galaxy S24 (360px)')" id="btn-dev-galaxy" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+        📱 Android (360px)
+      </button>
+      <button onclick="setDeviceSize(430, 840, 'iPhone Pro Max (430px)')" id="btn-dev-promax" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+        📱 Màn hình lớn (430px)
+      </button>
+    </div>
+  </div>
+
+  <!-- PHONE MOCKUP CONTAINER -->
+  <div id="phoneWrapper" class="phone-shadow rounded-[50px] bg-slate-950 p-3 relative transition-all duration-300" style="width: 390px; height: 800px;">
+    
+    <!-- DYNAMIC ISLAND / NOTCH -->
+    <div class="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-6 bg-black rounded-full z-40 flex items-center justify-between px-2.5">
+      <div class="w-2.5 h-2.5 rounded-full bg-[#111] border border-slate-800"></div>
+      <div class="w-2 h-2 rounded-full bg-emerald-500/80"></div>
+    </div>
+
+    <!-- PHONE SCREEN (LIGHT THEME MATCHING REAL APP) -->
+    <div class="w-full h-full bg-slate-50 text-slate-800 rounded-[40px] overflow-hidden flex flex-col relative shadow-inner">
+
+      <!-- STATUS BAR -->
+      <div class="h-11 bg-white/90 backdrop-blur border-b border-slate-100 flex items-center justify-between px-6 shrink-0 z-30 text-xs font-bold text-slate-800 select-none">
+        <span>09:41</span>
+        <div class="flex items-center gap-1.5 text-[11px]">
+          <span>5G</span>
+          <span>📶</span>
+          <span>🔋 100%</span>
+        </div>
+      </div>
+
+      <!-- APP HEADER FOR MOBILE -->
+      <header class="bg-white border-b border-slate-200 px-4 py-2.5 flex items-center justify-between shrink-0 shadow-sm z-20">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-700 to-teal-400 flex items-center justify-center text-white shadow">
+            🏸
+          </div>
+          <div>
+            <h2 class="font-black text-sm text-slate-900 leading-tight">CLB CẦU LÔNG SMASH</h2>
+            <p class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Quản lý Sân & Ví CLB
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1.5">
+          <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] font-bold border border-emerald-300">
+            AD
+          </div>
+        </div>
+      </header>
+
+      <!-- SCROLLABLE CONTENT BODY -->
+      <div id="mobileContentArea" class="flex-1 overflow-y-auto mobile-scroll p-3.5 space-y-4 pb-20">
+
+        <!-- ================= TAB: TRANG CHỦ ================= -->
+        <div id="tabContent-dashboard" class="space-y-4">
+          
+          <!-- 3 KPI CARDS ON 1 SINGLE ROW (THE REQUESTED FEATURE) -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Tổng quan tài chính</span>
+              <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">1 dòng duy nhất</span>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-2">
+              <!-- Card 1: Quỹ CLB -->
+              <div class="bg-white p-2.5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-extrabold uppercase tracking-tight text-slate-500 truncate">Quỹ CLB</span>
+                  <div class="w-5 h-5 rounded-md bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
+                    💰
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <span class="text-xs sm:text-sm font-black text-slate-900 block truncate">5.200.000đ</span>
+                </div>
+                <p class="text-[9px] text-slate-400 mt-0.5 truncate">Chi tiêu chung</p>
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+              </div>
+
+              <!-- Card 2: Quỹ tạm ứng -->
+              <div class="bg-white p-2.5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-extrabold uppercase tracking-tight text-slate-500 truncate">Tạm Ứng</span>
+                  <div class="w-5 h-5 rounded-md bg-amber-50 text-amber-600 flex items-center justify-center text-xs">
+                    🪙
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <span class="text-xs sm:text-sm font-black text-slate-900 block truncate">1.800.000đ</span>
+                </div>
+                <p class="text-[9px] text-slate-400 mt-0.5 truncate">Cọc / Ứng trước</p>
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-500"></div>
+              </div>
+
+              <!-- Card 3: Ví thành viên -->
+              <div class="bg-white p-2.5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-extrabold uppercase tracking-tight text-slate-500 truncate">Ví TV</span>
+                  <div class="w-5 h-5 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
+                    💳
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <span class="text-xs sm:text-sm font-black text-slate-900 block truncate">2.090.000đ</span>
+                </div>
+                <p class="text-[9px] text-slate-400 mt-0.5 truncate">Tổng trong ví</p>
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUICK ACTION BAR (MOBILE HORIZONTAL SCROLL) -->
+          <div class="flex gap-2 overflow-x-auto pb-1 mobile-scroll">
+            <button onclick="switchMobileTab('attendance')" class="shrink-0 px-3 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-bold text-xs shadow flex items-center gap-1.5">
+              <span>🏸</span> Buổi hoạt động
+            </button>
+            <button onclick="alert('Mở hộp thoại Nạp tiền ví thành viên')" class="shrink-0 px-3 py-2 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-xl font-bold text-xs flex items-center gap-1">
+              <span>➕</span> Nạp ví
+            </button>
+            <button onclick="alert('Mở ghi nhận Chi Quỹ: Mua ống cầu Victor / Tiền sân')" class="shrink-0 px-3 py-2 bg-white text-slate-700 border border-slate-200 rounded-xl font-bold text-xs flex items-center gap-1">
+              <span>🧾</span> Chi tiền cầu
+            </button>
+            <button onclick="alert('Mở hộp thoại Phạt vi phạm')" class="shrink-0 px-3 py-2 bg-white text-slate-700 border border-slate-200 rounded-xl font-bold text-xs flex items-center gap-1">
+              <span>⚠️</span> Phạt
+            </button>
+          </div>
+
+          <!-- MEMBER WALLET TRACKING LIST -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-3 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-xs text-slate-900 flex items-center gap-1">
+                <span>👛</span> Theo dõi ví thành viên
+              </h3>
+              <span class="text-[10px] text-slate-500 font-semibold">9 Hội viên</span>
+            </div>
+
+            <!-- List rows with Quick Check-in & Edit Pencil -->
+            <div class="space-y-2 text-xs">
+              
+              <!-- Member 1 -->
+              <div class="p-2.5 rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-between gap-2">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1">
+                    <b class="text-slate-900 truncate">Nguyễn Văn Tuấn (CN)</b>
+                    <span title="Chỉnh sửa tên thành viên" class="text-slate-400 hover:text-emerald-600 cursor-pointer text-[11px]">✏️</span>
+                  </div>
+                  <div class="text-[10px] text-slate-400">Chính thức • 7 buổi/tháng</div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  <div class="text-right">
+                    <b class="text-emerald-700 text-xs block">650.000đ</b>
+                  </div>
+                  <button onclick="alert('⚡ Điểm danh nhanh 1-chạm cho Nguyễn Văn Tuấn (Trừ 100k ví)')" class="px-2 py-1 bg-brand-50 hover:bg-brand-100 text-emerald-700 border border-emerald-300 font-bold rounded-lg text-[10px]" title="Điểm danh 1-chạm">
+                    ⚡
+                  </button>
+                  <button onclick="alert('Nạp tiền ví cho Nguyễn Văn Tuấn')" class="px-2 py-1 bg-emerald-600 text-white font-bold rounded-lg text-[10px]">
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <!-- Member 2 -->
+              <div class="p-2.5 rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-between gap-2">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1">
+                    <b class="text-slate-900 truncate">Trần Minh Hoàng</b>
+                    <span title="Chỉnh sửa tên thành viên" class="text-slate-400 hover:text-emerald-600 cursor-pointer text-[11px]">✏️</span>
+                  </div>
+                  <div class="text-[10px] text-slate-400">Chính thức • 4 buổi/tháng</div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  <div class="text-right">
+                    <b class="text-emerald-700 text-xs block">350.000đ</b>
+                  </div>
+                  <button onclick="alert('⚡ Điểm danh nhanh 1-chạm cho Trần Minh Hoàng (Trừ 50k ví)')" class="px-2 py-1 bg-brand-50 hover:bg-brand-100 text-emerald-700 border border-emerald-300 font-bold rounded-lg text-[10px]">
+                    ⚡
+                  </button>
+                  <button onclick="alert('Nạp tiền ví cho Trần Minh Hoàng')" class="px-2 py-1 bg-emerald-600 text-white font-bold rounded-lg text-[10px]">
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <!-- Member 3 (Negative Balance Warning) -->
+              <div class="p-2.5 rounded-xl border border-rose-100 bg-rose-50/50 flex items-center justify-between gap-2">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1">
+                    <b class="text-slate-900 truncate">Phạm Đức Long</b>
+                    <span title="Chỉnh sửa tên thành viên" class="text-slate-400 hover:text-emerald-600 cursor-pointer text-[11px]">✏️</span>
+                  </div>
+                  <div class="text-[10px] text-rose-600 font-semibold">Chính thức • 12 buổi (Nợ ví)</div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  <div class="text-right">
+                    <b class="text-rose-600 text-xs block">-50.000đ</b>
+                  </div>
+                  <button onclick="alert('⚡ Điểm danh nhanh cho Phạm Đức Long')" class="px-2 py-1 bg-rose-100 text-rose-700 border border-rose-300 font-bold rounded-lg text-[10px]">
+                    ⚡
+                  </button>
+                  <button onclick="alert('Nạp ví khẩn cấp cho Phạm Đức Long')" class="px-2 py-1 bg-emerald-600 text-white font-bold rounded-lg text-[10px]">
+                    +
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- RECENT TRANSACTIONS PREVIEW -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-3 shadow-sm">
+            <h3 class="font-bold text-xs text-slate-900 mb-2 flex items-center gap-1">
+              <span>🕒</span> Giao dịch gần đây
+            </h3>
+            <div class="space-y-1.5 text-xs">
+              <div class="p-2 rounded-xl bg-slate-50 flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-slate-800 text-[11px]">Trừ tiền sân ngày 16/09</div>
+                  <div class="text-[10px] text-slate-400">Nguyễn Văn Tuấn (CN)</div>
+                </div>
+                <b class="text-rose-600 font-black text-xs">-100.000đ</b>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-50 flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-slate-800 text-[11px]">Mua 2 ống cầu Victor No.1</div>
+                  <div class="text-[10px] text-slate-400">Chi Quỹ CLB</div>
+                </div>
+                <b class="text-rose-600 font-black text-xs">-580.000đ</b>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-50 flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-slate-800 text-[11px]">Nạp tiền ví VietQR</div>
+                  <div class="text-[10px] text-slate-400">Trần Minh Hoàng</div>
+                </div>
+                <b class="text-emerald-600 font-black text-xs">+500.000đ</b>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ================= TAB: HOẠT ĐỘNG (BUỔI HOẠT ĐỘNG MỚI THEO MẪU ẢNH) ================= -->
+        <div id="tabContent-attendance" class="hidden space-y-4 pb-24">
+          
+          <!-- Top Screen Title & Lang Switcher -->
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+            <div class="flex items-center gap-2">
+              <button onclick="switchMobileTab('dashboard')" class="text-slate-600 hover:text-slate-900 text-sm font-bold">❮</button>
+              <h3 class="font-black text-sm text-slate-900">Buổi hoạt động mới</h3>
+            </div>
+            <div class="flex items-center bg-slate-100 p-0.5 rounded-lg text-[10px] font-bold border border-slate-200">
+              <span class="px-2 py-0.5 rounded bg-slate-900 text-white">VI</span>
+              <span class="px-2 py-0.5 text-slate-500">EN</span>
+            </div>
+          </div>
+
+          <!-- Date & Type -->
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Ngày</label>
+              <input type="date" value="2026-09-20" class="w-full text-xs font-semibold border border-slate-200 rounded-xl px-2.5 py-2 bg-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Loại</label>
+              <select class="w-full text-xs font-semibold border border-slate-200 rounded-xl px-2.5 py-2 bg-white">
+                <option selected>Buổi cầu</option>
+                <option>Giao lưu</option>
+                <option>Giải đấu</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Điểm danh thành viên: Mặc định chưa điểm danh (0/27), khoảng cách thu nhỏ gọn như mục khách -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <div class="font-black text-xs text-slate-900 flex items-center gap-1">
+                <span>Điểm danh</span>
+                <span class="text-slate-400">·</span>
+                <span id="preview-total-count" class="text-emerald-700 font-extrabold text-sm">0</span>
+              </div>
+              <div class="flex items-center gap-2 text-[11px] font-bold text-emerald-700">
+                <button onclick="toggleAllPreviewMembers(true)" class="hover:underline">Chọn tất cả</button>
+                <button onclick="toggleAllPreviewMembers(false)" class="hover:underline">Bỏ chọn</button>
+              </div>
+            </div>
+
+            <!-- Hàng 1: Thành viên chính thức (20 người) -->
+            <div class="mb-2.5">
+              <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 flex justify-between">
+                <span>Thành viên chính thức</span>
+                <span id="preview-official-count" class="text-emerald-700 font-bold text-[10px]">0/20</span>
+              </div>
+              <div id="preview-official-grid" class="grid grid-cols-6 gap-1 text-center">
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">CHÍNH</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">CÔNG</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">DŨNG</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">DUY</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">ĐẠT TƯƠI</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">ĐÊ</button>
+
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">HẢI</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">HẠNH</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">HIẾU</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">HỒNG</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">HUY DÊ</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">KHƯƠNG</button>
+
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">KIÊN</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">LƯỢNG</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">MẠNH CT</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">MINH</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">NGUYÊN</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">PHÁP</button>
+
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">QUẢNG</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">T.ANH</button>
+              </div>
+            </div>
+
+            <!-- Hàng 2: Thành viên danh dự (7 người - 6 trên 1 hàng) -->
+            <div class="pt-2 border-t border-slate-100">
+              <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 flex justify-between">
+                <span>Thành viên danh dự</span>
+                <span id="preview-honorary-count" class="text-purple-700 font-bold text-[10px]">0/7</span>
+              </div>
+              <div id="preview-honorary-grid" class="grid grid-cols-6 gap-1 text-center">
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">TÂN</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">THÀNH</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">THẮNG</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">THUỘC</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">TOÀN</button>
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">TRƯỜNG</button>
+
+                <button onclick="togglePreviewChip(this)" class="preview-chip py-1 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs min-h-[34px] flex items-center justify-center leading-tight">TƯƠI</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Khách (HIỂN THỊ MỖI LEVEL TRÊN 1 DÒNG: Level A : THẾ ANH , PHONG , QUANG-Q) -->
+          <div class="pt-2 border-t border-slate-100 space-y-2">
+            <div class="flex items-center justify-between mb-0.5">
+              <div class="font-black text-xs text-slate-900 flex items-center gap-1">
+                <span>Khách</span>
+                <span class="text-slate-400">·</span>
+                <span id="preview-guest-count" class="text-emerald-700 font-extrabold">0</span>
+              </div>
+              <span class="text-[10px] text-slate-400 font-semibold bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200">1 dòng mỗi Level</span>
+            </div>
+
+            <!-- Level A : THẾ ANH , PHONG , QUANG-Q -->
+            <div class="flex items-center gap-1.5 py-0.5 flex-nowrap overflow-x-auto mobile-scroll">
+              <div class="shrink-0 font-black text-xs text-emerald-800 min-w-[58px]">
+                Level A :
+              </div>
+              <div class="flex items-center gap-1 flex-nowrap shrink-0">
+                <button type="button" onclick="togglePreviewGuest(this, 'THẾ ANH', 90000)" class="preview-guest-chip shrink-0 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-xs font-bold shadow-2xs whitespace-nowrap transition">
+                  THẾ ANH
+                </button>
+                <span class="text-slate-300 font-bold text-xs">,</span>
+                <button type="button" onclick="togglePreviewGuest(this, 'PHONG', 90000)" class="preview-guest-chip shrink-0 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-xs font-bold shadow-2xs whitespace-nowrap transition">
+                  PHONG
+                </button>
+                <span class="text-slate-300 font-bold text-xs">,</span>
+                <button type="button" onclick="togglePreviewGuest(this, 'QUANG-Q', 90000)" class="preview-guest-chip shrink-0 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-xs font-bold shadow-2xs whitespace-nowrap transition">
+                  QUANG-Q
+                </button>
+              </div>
+            </div>
+
+            <!-- Level B : CHA PHÓ -->
+            <div class="flex items-center gap-1.5 py-0.5 flex-nowrap overflow-x-auto mobile-scroll">
+              <div class="shrink-0 font-black text-xs text-amber-800 min-w-[58px]">
+                Level B :
+              </div>
+              <div class="flex items-center gap-1 flex-nowrap shrink-0">
+                <button type="button" onclick="togglePreviewGuest(this, 'CHA PHÓ', 70000)" class="preview-guest-chip shrink-0 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-xs font-bold shadow-2xs whitespace-nowrap transition">
+                  CHA PHÓ
+                </button>
+              </div>
+            </div>
+
+            <!-- Level C : KHOAI , Khách 1 , Khách 2 -->
+            <div class="flex items-center gap-1.5 py-0.5 flex-nowrap overflow-x-auto mobile-scroll">
+              <div class="shrink-0 font-black text-xs text-blue-800 min-w-[58px]">
+                Level C :
+              </div>
+              <div class="flex items-center gap-1 flex-nowrap shrink-0">
+                <button type="button" onclick="togglePreviewGuest(this, 'KHOAI', 50000)" class="preview-guest-chip shrink-0 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-xs font-bold shadow-2xs whitespace-nowrap transition">
+                  KHOAI
+                </button>
+                <span class="text-slate-300 font-bold text-xs">,</span>
+                <button type="button" onclick="togglePreviewGuest(this, 'Khách 1', 50000)" class="preview-guest-chip shrink-0 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-xs font-bold shadow-2xs whitespace-nowrap transition">
+                  Khách 1
+                </button>
+                <span class="text-slate-300 font-bold text-xs">,</span>
+                <button type="button" onclick="togglePreviewGuest(this, 'Khách 2', 50000)" class="preview-guest-chip shrink-0 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-xs font-bold shadow-2xs whitespace-nowrap transition">
+                  Khách 2
+                </button>
+              </div>
+            </div>
+          </div>
+
+            <!-- Thêm khách mới inline -->
+            <div class="flex items-center gap-1.5 pt-1">
+              <input type="text" placeholder="Khách mới" class="flex-1 text-xs border border-slate-200 rounded-xl px-2.5 py-1.5 bg-white" />
+              <select class="text-xs border border-slate-200 rounded-xl px-2 py-1.5 bg-white">
+                <option>Chưa xếp hạng</option>
+                <option>Level C · 50k</option>
+                <option>Level B · 70k</option>
+                <option>Level A · 90k</option>
+              </select>
+              <button onclick="alert('Đã thêm khách mới!')" class="w-8 h-8 bg-white border border-slate-200 text-slate-900 font-bold rounded-xl flex items-center justify-center text-sm shadow-sm">+</button>
+            </div>
+
+            <!-- Checkbox lưu khách -->
+            <label class="flex items-start gap-2 pt-1 text-[10px] text-slate-500 cursor-pointer">
+              <input type="checkbox" class="mt-0.5 w-3.5 h-3.5 rounded text-emerald-600" />
+              <span>Lưu vào danh sách khách (Không bật thì chỉ tính cho buổi này).</span>
+            </label>
+
+            <!-- DÒNG LƯU VÀ SỬA ĐIỂM DANH TẠM THỜI -->
+            <div id="previewAttendanceSaveBar" class="mt-2 p-2.5 rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-between gap-2 flex-wrap shadow-2xs transition-all">
+              <div class="flex items-center gap-2 min-w-0">
+                <span id="previewSaveStatusBadge" class="px-2 py-0.5 rounded-md text-[10px] font-black bg-slate-200 text-slate-700 shrink-0 transition-colors">
+                  Chưa lưu tạm
+                </span>
+                <div class="min-w-0">
+                  <div id="previewSaveCountText" class="text-[11px] font-black text-slate-800 truncate">0 người được chọn</div>
+                  <div id="previewSaveNoteText" class="text-[9px] text-slate-400 truncate">Lưu danh sách để nạp vào trận cầu</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" id="btnPreviewSaveTemp" onclick="savePreviewTemporaryAttendance()" class="px-2.5 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs shadow-xs flex items-center gap-1 transition active:scale-95 cursor-pointer">
+                  <span>💾</span>
+                  <span id="btnPreviewSaveTempLabel">Lưu điểm danh</span>
+                </button>
+                <button type="button" id="btnPreviewEditTemp" onclick="editPreviewAttendancePrompt()" class="px-2 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-bold text-xs shadow-2xs flex items-center gap-1 transition active:scale-95 cursor-pointer">
+                  <span>✏️</span>
+                  <span>Sửa / Bổ sung</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chi phí (Ảnh 1) -->
+          <div class="pt-2 border-t border-slate-100 space-y-2">
+            <div class="flex items-center justify-between flex-wrap gap-1.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-black text-xs text-slate-900">Chi phí</span>
+                <div class="bg-slate-100 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-lg border border-slate-200 flex items-center gap-1.5 shadow-2xs">
+                  <span>ĐƠN GIÁ THEO NGÀY 12 = 340.000đ</span>
+                  <span class="text-emerald-700 text-[9px] font-bold cursor-pointer hover:underline">Áp dụng</span>
+                </div>
+              </div>
+              <button class="text-emerald-700 text-xs font-bold shrink-0">+ Thêm dòng</button>
+            </div>
+
+            <!-- Dòng chi phí mẫu -->
+            <div class="bg-white p-2.5 rounded-xl border border-slate-200 space-y-2 text-xs">
+              <div class="flex items-center justify-between gap-1">
+                <input type="text" value="ĐƠN GIÁ THEO NGÀY 12" class="flex-1 font-semibold text-xs border border-slate-200 rounded-lg px-2 py-1 bg-slate-50" />
+                <span class="text-slate-400 cursor-pointer">🗑️</span>
+              </div>
+              <div class="grid grid-cols-3 gap-1.5 text-center">
+                <div>
+                  <span class="text-[9px] text-slate-400 block">Số lượng</span>
+                  <input type="number" value="1" class="w-full text-xs font-bold border border-slate-200 rounded-lg p-1 text-center" />
+                </div>
+                <div>
+                  <span class="text-[9px] text-slate-400 block">Đơn giá</span>
+                  <input type="number" value="340000" class="w-full text-xs font-bold border border-slate-200 rounded-lg p-1 text-right" />
+                </div>
+                <div>
+                  <span class="text-[9px] text-slate-400 block">Số tiền</span>
+                  <input type="number" value="340000" class="w-full text-xs font-black text-emerald-800 border border-slate-200 rounded-lg p-1 text-right" />
+                </div>
+              </div>
+              <label class="flex items-center gap-1 text-[11px] text-slate-600">
+                <input type="checkbox" class="w-3.5 h-3.5 text-emerald-600" />
+                <span>Mua combo</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Khoản đóng góp -->
+          <div class="pt-2 border-t border-slate-100 space-y-2 text-xs">
+            <div class="font-black text-xs text-slate-900">Khoản đóng góp</div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <span class="text-[10px] text-slate-500 font-bold block mb-0.5">Người ứng tiền</span>
+                <select class="w-full text-xs border border-slate-200 rounded-lg p-1.5 bg-white">
+                  <option>Không ai</option>
+                  <option>Trần Đức Chính</option>
+                  <option>Lê Anh Dũng</option>
+                </select>
+              </div>
+              <div>
+                <div class="flex justify-between items-center text-[10px] text-slate-500 font-bold mb-0.5">
+                  <span>Ứng trước</span>
+                  <label class="flex items-center gap-0.5 font-normal"><input type="checkbox" class="w-3 h-3 text-emerald-600" /> Tất cả</label>
+                </div>
+                <input type="number" value="0" class="w-full text-xs font-semibold border border-slate-200 rounded-lg p-1.5" />
+              </div>
+            </div>
+
+          </div>
+
+          <!-- THỐNG KÊ CÁC TRẬN CẦU (THAY THẾ MỤC GHI CHÚ) -->
+          <div class="pt-3 border-t border-slate-100 space-y-2.5">
+            <div class="flex items-center justify-between flex-wrap gap-1.5">
+              <div class="flex items-center gap-1.5">
+                <span class="font-black text-xs text-slate-900">Thống kê các trận cầu</span>
+                <span id="previewMatchCountBadge" class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full text-[10px] font-black">2 trận</span>
+              </div>
+              <div class="flex items-center gap-1 flex-wrap">
+                <button type="button" onclick="openPreviewTournamentModal()" class="text-[10px] font-black px-2 py-1 bg-gradient-to-r from-purple-100 to-indigo-100 hover:from-purple-200 text-purple-900 rounded-lg border border-purple-300 transition flex items-center gap-1 shadow-2xs" title="Bốc thăm chia nhánh A & B tranh giải CLB">
+                  <span>🏆</span> Tranh Giải (Nhánh A & B)
+                </button>
+                <button type="button" onclick="randomPreviewMatch()" class="text-[10px] font-bold px-2 py-1 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-lg border border-purple-200 transition" title="Bốc thăm ngẫu nhiên 4 người">
+                  🎲 Bốc ngẫu nhiên
+                </button>
+                <button type="button" onclick="addPreviewMatch()" class="text-[10px] font-bold px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg border border-emerald-200 transition" title="Tự thêm trận đấu thủ công">
+                  ✍️ Thêm thủ công
+                </button>
+              </div>
+            </div>
+
+            <!-- Tần suất vào sân của người có mặt -->
+            <div class="bg-slate-50 p-2 rounded-xl border border-slate-200">
+              <div class="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                Số trận đã đấu (chọn nhanh theo điểm danh):
+              </div>
+              <div id="previewMemberMatchStatsBar" class="flex flex-wrap gap-1 text-[10px]">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- BẢNG DÒNG KẾT QUẢ CÁC TRẬN ĐẤU (TỈ SỐ THEO CẶP) -->
+            <div id="previewMatchLinesSummaryCard" class="bg-emerald-50/90 p-2.5 rounded-xl border border-emerald-200/90 space-y-1.5">
+              <div class="text-[10px] font-black text-emerald-950 uppercase tracking-wide flex items-center justify-between">
+                <span>⚡ Kết quả các dòng trận đấu:</span>
+                <span class="text-[9px] text-emerald-700 font-semibold italic">Tỉ số theo cặp</span>
+              </div>
+              <div id="previewMatchLinesSummary" class="space-y-1 text-[11px]">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Danh sách từng trận đấu -->
+            <div id="previewMatchesContainer" class="space-y-2">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Sticky Split Bar -->
+          <div class="p-3 bg-white border border-slate-200 rounded-2xl shadow-lg space-y-2">
+            <div class="grid grid-cols-3 gap-1 text-center text-xs">
+              <div>
+                <span class="text-[10px] text-slate-400 block">Tổng chi phí</span>
+                <b class="text-slate-900 text-xs">340.000đ</b>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 block">Khách đóng</span>
+                <b id="preview-guest-paid" class="text-slate-900 text-xs">0đ</b>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 block">Cần chia</span>
+                <b id="preview-need-split" class="text-slate-900 text-xs">340.000đ</b>
+              </div>
+            </div>
+            <button onclick="alert('Đã lưu buổi hoạt động và chia tiền thành công!\nMỗi thành viên được trừ vào ví.')" class="w-full py-3 px-3 bg-emerald-700 text-white font-black text-xs rounded-xl flex items-center justify-between shadow-md">
+              <span>Lưu và chia tiền</span>
+              <span id="preview-per-person" class="bg-emerald-800 px-2 py-0.5 rounded-lg text-[11px]">13.000đ / mỗi người</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ================= TAB: TÀI CHÍNH ================= -->
+        <div id="tabContent-finance" class="hidden space-y-3">
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="alert('Mở nạp ví')" class="p-3 bg-white border border-slate-200 rounded-2xl text-left shadow-sm">
+              <div class="text-lg">➕</div>
+              <b class="text-xs text-slate-900 block mt-1">Nạp Ví TV</b>
+              <span class="text-[10px] text-slate-400">Tiền mặt / VietQR</span>
+            </button>
+            <button onclick="alert('Mở chi quỹ')" class="p-3 bg-white border border-slate-200 rounded-2xl text-left shadow-sm">
+              <div class="text-lg">🧾</div>
+              <b class="text-xs text-slate-900 block mt-1">Thu / Chi Quỹ</b>
+              <span class="text-[10px] text-slate-400">Mua cầu, tiền sân</span>
+            </button>
+          </div>
+
+          <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+            <b class="text-xs text-slate-900 block mb-2">Sao kê giao dịch Quỹ & Ví</b>
+            <div class="text-[11px] text-slate-500 py-3 text-center border-t border-slate-100">
+              Đầy đủ lịch sử thu chi minh bạch 100%
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TAB: HỘI VIÊN ================= -->
+        <div id="tabContent-members" class="hidden space-y-3">
+          <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <b class="text-xs text-slate-900">Danh sách Hội viên</b>
+              <button onclick="alert('Thêm thành viên mới')" class="px-2.5 py-1 bg-emerald-600 text-white font-bold rounded-lg text-[10px]">
+                + Thêm mới
+              </button>
+            </div>
+            <input type="text" placeholder="Tìm kiếm hội viên..." class="w-full px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg" />
+            <p class="text-[11px] text-slate-500 italic text-center py-2">
+              Admin có thể đổi tên bất kỳ hội viên nào bằng biểu tượng chiếc bút ✏️
+            </p>
+          </div>
+        </div>
+
+        <!-- ================= TAB: CẤU HÌNH ================= -->
+        <div id="tabContent-settings" class="hidden space-y-3">
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2.5 text-xs">
+            <b class="text-xs text-slate-900 block">Cài đặt CLB & Dữ liệu</b>
+            <div>
+              <label class="text-[11px] text-slate-500 block mb-1">Tên CLB:</label>
+              <input type="text" value="CLB CẦU LÔNG SMASH" class="w-full px-2.5 py-1 text-xs border border-slate-200 rounded-lg font-bold" />
+            </div>
+            <div class="pt-2 flex gap-2">
+              <button onclick="alert('Đã tải tệp sao lưu JSON về máy!')" class="flex-1 py-2 bg-slate-900 text-white font-bold text-[11px] rounded-xl">
+                💾 Tải sao lưu (JSON)
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MOBILE BOTTOM NAVIGATION (CHÍNH XÁC THEO ẢNH CHỤP 5 TAB) -->
+      <nav class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-slate-200 px-1 py-1.5 flex justify-around items-center z-30 shadow-lg select-none">
+        <button onclick="switchMobileTab('dashboard')" id="m-btn-dashboard" class="flex flex-col items-center py-1 px-2 text-[10px] font-bold text-emerald-700 transition">
+          <span class="text-base leading-none mb-0.5">🏠</span>
+          <span>Trang chủ</span>
+        </button>
+        <button onclick="switchMobileTab('attendance')" id="m-btn-attendance" class="flex flex-col items-center py-1 px-2 text-[10px] font-semibold text-slate-400 transition">
+          <span class="text-base leading-none mb-0.5">📅</span>
+          <span>Hoạt động</span>
+        </button>
+        <button onclick="switchMobileTab('finance')" id="m-btn-finance" class="flex flex-col items-center py-1 px-2 text-[10px] font-semibold text-slate-400 transition">
+          <span class="text-base leading-none mb-0.5">📊</span>
+          <span>Sổ quỹ</span>
+        </button>
+        <button onclick="switchMobileTab('members')" id="m-btn-members" class="flex flex-col items-center py-1 px-2 text-[10px] font-semibold text-slate-400 transition">
+          <span class="text-base leading-none mb-0.5">👥</span>
+          <span>Thành viên</span>
+        </button>
+        <button onclick="switchMobileTab('settings')" id="m-btn-settings" class="flex flex-col items-center py-1 px-2 text-[10px] font-semibold text-slate-400 transition">
+          <span class="text-base leading-none mb-0.5">👤</span>
+          <span>Cá nhân</span>
+        </button>
+      </nav>
+
+      <!-- HOME INDICATOR (IPHONE BOTTOM BAR) -->
+      <div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-slate-900/40 rounded-full z-40 pointer-events-none"></div>
+
+      <!-- MODAL BỐC THĂM TRANH GIẢI CLB (NHÁNH A & B) -->
+      <div id="previewTournamentModal" class="hidden absolute inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex flex-col justify-end p-2 sm:p-3">
+        <div class="bg-white rounded-3xl p-3.5 shadow-2xl border border-slate-100 max-h-[90%] flex flex-col space-y-3 overflow-hidden">
+          <!-- Header -->
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100 shrink-0">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 text-white flex items-center justify-center text-sm shadow">🏆</div>
+              <div>
+                <h3 class="text-xs font-black text-slate-900">Bốc Thăm Tranh Giải CLB</h3>
+                <p class="text-[10px] text-purple-600 font-bold">Chia Nhánh A & Nhánh B</p>
+              </div>
+            </div>
+            <button type="button" onclick="closePreviewTournamentModal()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold flex items-center justify-center text-xs">✕</button>
+          </div>
+
+          <!-- Body Scrollable -->
+          <div class="overflow-y-auto space-y-2.5 text-xs pr-1">
+            <!-- Cơ cấu giải thưởng -->
+            <div class="p-2.5 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border border-purple-200 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-black uppercase text-purple-900 flex items-center gap-1">
+                  <span>🎁</span> Cơ cấu giải thưởng:
+                </span>
+                <span class="text-[9px] px-1.5 py-0.5 bg-purple-200/80 text-purple-900 rounded font-bold">Cúp CLB</span>
+              </div>
+              <div class="text-[11px] text-purple-900 space-y-0.5 font-medium">
+                <div class="flex items-center gap-1">🥇 <b>Nhất:</b> Cúp + 1 Tháp bia + 4 Bò húc</div>
+                <div class="flex items-center gap-1">🥈 <b>Nhì:</b> 2 Lốc bò húc / nước ngọt</div>
+                <div class="flex items-center gap-1">🥉 <b>Ba:</b> 1 Ống cầu thi đấu</div>
+              </div>
+            </div>
+
+            <!-- Chọn thể thức giải -->
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold text-slate-500 uppercase">Thể thức thi đấu:</label>
+              <select id="previewTourSystemSelect" onchange="if(previewTournamentData){recalculatePreviewTournamentMatches();renderPreviewTournamentResults();}" class="w-full text-xs font-bold text-slate-800 border border-slate-200 rounded-xl p-2 bg-slate-50 focus:outline-none focus:ring-1 focus:ring-purple-500">
+                <option value="KNOCKOUT" selected>⚡ Đấu Loại Trực Tiếp (Knockout: Nhánh A & B → Chung kết)</option>
+                <option value="ROUND_ROBIN">🔄 Vòng Tròn Chia Bảng (Bảng A & B → Bán kết → Chung kết)</option>
+              </select>
+            </div>
+
+            <!-- Bộ chọn: Bốc ngẫu nhiên vs Xếp thủ công -->
+            <div class="grid grid-cols-2 gap-1.5 p-1 bg-slate-100 rounded-xl text-[11px] font-bold">
+              <button type="button" id="btnPreviewTourModeRandom" onclick="switchPreviewTourMode('RANDOM')" class="py-1.5 rounded-lg bg-white text-purple-900 shadow-2xs border border-purple-200 flex items-center justify-center gap-1 font-black cursor-pointer">
+                <span>🎲</span> Bốc ngẫu nhiên
+              </button>
+              <button type="button" id="btnPreviewTourModeManual" onclick="switchPreviewTourMode('MANUAL')" class="py-1.5 rounded-lg text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 cursor-pointer font-semibold">
+                <span>✍️</span> Xếp thủ công
+              </button>
+            </div>
+
+            <!-- Nút bốc thăm ngẫu nhiên -->
+            <div id="previewTourRandomActionBlock" class="flex gap-2">
+              <button type="button" onclick="drawPreviewTournament()" class="flex-1 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 text-white font-black text-xs rounded-xl shadow flex items-center justify-center gap-1.5 transition cursor-pointer">
+                <span>🎲</span> Bốc Thăm & Chia Nhánh Ngay
+              </button>
+            </div>
+
+            <!-- Hướng dẫn xếp thủ công -->
+            <div id="previewTourManualActionBlock" class="hidden p-2 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 text-[10px] space-y-1">
+              <div class="font-bold flex items-center justify-between">
+                <span>✍️ Xếp thủ công cặp đấu Nhánh A & B:</span>
+                <div class="flex items-center gap-1">
+                  <button type="button" onclick="addPreviewManualPair('A')" class="px-1.5 py-0.5 bg-blue-600 text-white rounded text-[9px] font-black cursor-pointer">+ Cặp A</button>
+                  <button type="button" onclick="addPreviewManualPair('B')" class="px-1.5 py-0.5 bg-amber-600 text-white rounded text-[9px] font-black cursor-pointer">+ Cặp B</button>
+                </div>
+              </div>
+              <p class="text-[9px] text-amber-800">Chọn trực tiếp người chơi cho từng cặp hoặc bấm <b>⇄ Chuyển nhánh</b> bên dưới.</p>
+            </div>
+
+            <!-- Kết quả hiển thị nhánh A & B -->
+            <div id="previewTournamentResults" class="space-y-2.5">
+              <div class="text-center py-6 text-slate-400 text-xs italic bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                Bấm <b>"Bốc Thăm & Chia Nhánh Ngay"</b> để bốc thăm ngẫu nhiên người chơi vào Nhánh A & B và lên lịch thi đấu cúp CLB!
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="pt-2 border-t border-slate-100 flex gap-2 shrink-0">
+            <button type="button" onclick="closePreviewTournamentModal()" class="flex-1 py-2 bg-slate-100 text-slate-700 font-bold text-xs rounded-xl">Đóng</button>
+            <button type="button" id="btnApplyPreviewTournament" onclick="applyPreviewTournamentToMatches()" class="flex-1 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs rounded-xl shadow disabled:opacity-40 disabled:cursor-not-allowed transition" disabled>
+              📥 Nạp Vào Trận Đấu
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function setDeviceSize(w, h, label) {
+      const wrapper = document.getElementById('phoneWrapper');
+      wrapper.style.width = w + 'px';
+      wrapper.style.height = h + 'px';
+
+      document.querySelectorAll('#btn-dev-iphone, #btn-dev-galaxy, #btn-dev-promax').forEach(b => {
+        b.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition';
+      });
+      if (w === 390) document.getElementById('btn-dev-iphone').className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow transition';
+      if (w === 360) document.getElementById('btn-dev-galaxy').className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow transition';
+      if (w === 430) document.getElementById('btn-dev-promax').className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow transition';
+    }
+
+    function switchMobileTab(tab) {
+      const tabs = ['dashboard', 'attendance', 'finance', 'members', 'settings'];
+      tabs.forEach(t => {
+        const content = document.getElementById(`tabContent-${t}`);
+        const btn = document.getElementById(`m-btn-${t}`);
+        if (content) {
+          if (t === tab) content.classList.remove('hidden');
+          else content.classList.add('hidden');
+        }
+        if (btn) {
+          if (t === tab) {
+            btn.className = 'flex flex-col items-center py-1 px-2 text-[10px] font-bold text-emerald-700 transition';
+          } else {
+            btn.className = 'flex flex-col items-center py-1 px-2 text-[10px] font-semibold text-slate-400 transition';
+          }
+        }
+      });
+    }
+
+    let previewSelectedGuests = new Map();
+
+    let previewTemporaryAttendanceSaved = false;
+    let previewIsEditingAttendance = false;
+    let previewSavedAttendanceTime = null;
+
+    function togglePreviewChip(btn) {
+      const isSelected = btn.classList.contains('bg-emerald-700');
+      if (isSelected) {
+        btn.className = 'preview-chip py-1.5 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs';
+      } else {
+        btn.className = 'preview-chip py-1.5 px-0.5 rounded-xl bg-emerald-700 text-white font-black text-[10px] shadow-2xs ring-1 ring-emerald-600 select-none';
+      }
+      if (previewTemporaryAttendanceSaved) {
+        previewIsEditingAttendance = true;
+      }
+      recalculatePreviewSplit();
+      updatePreviewAttendanceSaveBarUI();
+      renderPreviewMatches();
+    }
+
+    function toggleAllPreviewMembers(selectAll) {
+      document.querySelectorAll('.preview-chip').forEach(btn => {
+        if (selectAll) {
+          btn.className = 'preview-chip py-1.5 px-0.5 rounded-xl bg-emerald-700 text-white font-black text-[10px] shadow-2xs ring-1 ring-emerald-600 select-none';
+        } else {
+          btn.className = 'preview-chip py-1.5 px-0.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-bold text-[10px] select-none hover:bg-slate-50 transition shadow-2xs';
+        }
+      });
+      if (previewTemporaryAttendanceSaved) {
+        previewIsEditingAttendance = true;
+      }
+      recalculatePreviewSplit();
+      updatePreviewAttendanceSaveBarUI();
+      renderPreviewMatches();
+    }
+
+    function togglePreviewGuest(btn, name, fee) {
+      if (!name) {
+        name = btn.getAttribute('data-name') || btn.innerText.replace('✓ ', '').trim();
+      }
+
+      const isSel = btn.classList.contains('bg-emerald-700');
+      if (isSel) {
+        btn.className = 'preview-guest-chip shrink-0 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-xs font-bold shadow-2xs whitespace-nowrap transition';
+        btn.innerText = name;
+        previewSelectedGuests.delete(name);
+      } else {
+        btn.className = 'preview-guest-chip shrink-0 px-3 py-1.5 rounded-xl bg-emerald-700 text-white text-xs font-black shadow-2xs whitespace-nowrap ring-1 ring-emerald-600 transition';
+        btn.innerText = '✓ ' + name;
+        previewSelectedGuests.set(name, fee);
+      }
+      if (previewTemporaryAttendanceSaved) {
+        previewIsEditingAttendance = true;
+      }
+      recalculatePreviewSplit();
+      updatePreviewAttendanceSaveBarUI();
+      renderPreviewMatches();
+    }
+
+    function recalculatePreviewSplit() {
+      const selectedMembers = document.querySelectorAll('.preview-chip.bg-emerald-700').length;
+      const countEl = document.getElementById('preview-total-count');
+      if (countEl) countEl.innerText = selectedMembers;
+
+      const offEl = document.getElementById('preview-official-count');
+      const honEl = document.getElementById('preview-honorary-count');
+      if (offEl) {
+        const offSel = document.querySelectorAll('#preview-official-grid .preview-chip.bg-emerald-700').length;
+        offEl.innerText = `${offSel}/20`;
+      }
+      if (honEl) {
+        const honSel = document.querySelectorAll('#preview-honorary-grid .preview-chip.bg-emerald-700').length;
+        honEl.innerText = `${honSel}/7`;
+      }
+
+      let guestPaid = 0;
+      previewSelectedGuests.forEach(fee => guestPaid += fee);
+      const guestCountEl = document.getElementById('preview-guest-count');
+      const guestPaidEl = document.getElementById('preview-guest-paid');
+      if (guestCountEl) guestCountEl.innerText = previewSelectedGuests.size;
+      if (guestPaidEl) guestPaidEl.innerText = guestPaid.toLocaleString('vi-VN') + 'đ';
+
+      const totalCost = 340000;
+      const needSplit = Math.max(0, totalCost - guestPaid);
+      const needSplitEl = document.getElementById('preview-need-split');
+      if (needSplitEl) needSplitEl.innerText = needSplit.toLocaleString('vi-VN') + 'đ';
+
+      const perPerson = selectedMembers > 0 ? Math.ceil((needSplit / selectedMembers) / 1000) * 1000 : 0;
+      const perPersonEl = document.getElementById('preview-per-person');
+      if (perPersonEl) perPersonEl.innerText = perPerson.toLocaleString('vi-VN') + 'đ / mỗi người';
+
+      updatePreviewAttendanceSaveBarUI();
+    }
+
+    function updatePreviewAttendanceSaveBarUI() {
+      const bar = document.getElementById('previewAttendanceSaveBar');
+      const badge = document.getElementById('previewSaveStatusBadge');
+      const countText = document.getElementById('previewSaveCountText');
+      const noteText = document.getElementById('previewSaveNoteText');
+      const btnSave = document.getElementById('btnPreviewSaveTemp');
+      const btnLabel = document.getElementById('btnPreviewSaveTempLabel');
+
+      if (!bar) return;
+
+      const memCount = document.querySelectorAll('.preview-chip.bg-emerald-700').length;
+      const guestCount = previewSelectedGuests.size;
+      const total = memCount + guestCount;
+
+      if (previewTemporaryAttendanceSaved) {
+        if (previewIsEditingAttendance) {
+          bar.className = 'mt-2 p-2.5 rounded-2xl border border-amber-300 bg-amber-50/80 flex items-center justify-between gap-2 flex-wrap shadow-2xs transition-all';
+          if (badge) {
+            badge.className = 'px-2 py-0.5 rounded-md text-[10px] font-black bg-amber-200 text-amber-900 shrink-0';
+            badge.textContent = 'Đang bổ sung...';
+          }
+          if (countText) countText.textContent = `${total} người đang chọn (${memCount} TV, ${guestCount} Khách)`;
+          if (noteText) noteText.textContent = 'Chạm thêm người vừa đến rồi bấm "Lưu bổ sung"';
+          if (btnLabel) btnLabel.textContent = 'Lưu bổ sung';
+          if (btnSave) btnSave.className = 'px-2.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-black text-xs shadow-xs flex items-center gap-1 transition active:scale-95 cursor-pointer';
+        } else {
+          bar.className = 'mt-2 p-2.5 rounded-2xl border border-emerald-300 bg-emerald-50/80 flex items-center justify-between gap-2 flex-wrap shadow-2xs transition-all';
+          if (badge) {
+            badge.className = 'px-2 py-0.5 rounded-md text-[10px] font-black bg-emerald-200 text-emerald-900 shrink-0';
+            badge.textContent = '✓ Đã lưu tạm';
+          }
+          if (countText) countText.textContent = `${total} người đã lưu (${memCount} TV, ${guestCount} Khách)`;
+          if (noteText) noteText.textContent = `Đã áp dụng vào trận cầu • Lúc ${previewSavedAttendanceTime || ''}`;
+          if (btnLabel) btnLabel.textContent = '✓ Đã lưu tạm';
+          if (btnSave) btnSave.className = 'px-2.5 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs shadow-xs flex items-center gap-1 transition active:scale-95 cursor-pointer';
+        }
+      } else {
+        bar.className = 'mt-2 p-2.5 rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-between gap-2 flex-wrap shadow-2xs transition-all';
+        if (badge) {
+          badge.className = 'px-2 py-0.5 rounded-md text-[10px] font-black bg-slate-200 text-slate-700 shrink-0';
+          badge.textContent = 'Chưa lưu tạm';
+        }
+        if (countText) countText.textContent = `${total} người được chọn (${memCount} TV, ${guestCount} Khách)`;
+        if (noteText) noteText.textContent = 'Lưu danh sách để nạp vào trận cầu';
+        if (btnLabel) btnLabel.textContent = 'Lưu điểm danh';
+        if (btnSave) btnSave.className = 'px-2.5 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs shadow-xs flex items-center gap-1 transition active:scale-95 cursor-pointer';
+      }
+    }
+
+    function savePreviewTemporaryAttendance() {
+      const memCount = document.querySelectorAll('.preview-chip.bg-emerald-700').length;
+      const guestCount = previewSelectedGuests.size;
+      const total = memCount + guestCount;
+
+      if (total === 0) {
+        alert('Vui lòng chạm chọn ít nhất 1 thành viên hoặc khách trước khi lưu điểm danh!');
+        return;
+      }
+
+      previewTemporaryAttendanceSaved = true;
+      previewIsEditingAttendance = false;
+      previewSavedAttendanceTime = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+
+      // Cập nhật người chơi trong các trận cầu mẫu nếu có
+      const attendees = getPreviewCheckedInAttendees();
+      if (previewMatches && previewMatches.length > 0 && attendees.length >= 4) {
+        const m1 = previewMatches[0];
+        if (m1) {
+          m1.team1 = [attendees[0].name, attendees[1].name];
+          m1.team2 = [attendees[2].name, attendees[3].name];
+        }
+      }
+
+      updatePreviewAttendanceSaveBarUI();
+      renderPreviewMatches();
+      alert(`✓ Đã lưu tạm danh sách ${total} người điểm danh! Đã áp dụng cho thống kê các trận cầu.`);
+    }
+
+    function editPreviewAttendancePrompt() {
+      previewIsEditingAttendance = true;
+      updatePreviewAttendanceSaveBarUI();
+
+      const grid = document.getElementById('preview-official-grid');
+      if (grid) {
+        grid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        grid.classList.add('ring-2', 'ring-amber-400', 'p-1', 'rounded-xl', 'transition-all');
+        setTimeout(() => {
+          grid.classList.remove('ring-2', 'ring-amber-400', 'p-1', 'rounded-xl');
+        }, 1200);
+      }
+
+      alert('Chế độ sửa / bổ sung điểm danh: Hãy chạm chọn thêm người vừa đến rồi bấm "Lưu bổ sung"!');
+    }
+
+    // ==========================================
+    // MATCH STATISTICS & LOGIC FOR MOBILE PREVIEW
+    // ==========================================
+    let previewMatches = [
+      { id: 1, team1: ['CHÍNH', 'CÔNG'], team2: ['DŨNG', 'DUY'], score1: 21, score2: 18, prize: '4 Bò húc' },
+      { id: 2, team1: ['CHÍNH', 'DŨNG'], team2: ['DUY', 'ĐẠT TƯƠI'], score1: 19, score2: 21, prize: '1 Tháp bia' }
+    ];
+
+    function getPreviewCheckedInAttendees() {
+      const attendees = [];
+      document.querySelectorAll('.preview-chip.bg-emerald-700').forEach(chip => {
+        const name = chip.innerText.replace('✓ ', '').trim();
+        attendees.push({ name: name, type: 'MEMBER' });
+      });
+      previewSelectedGuests.forEach((fee, name) => {
+        attendees.push({ name: name, type: 'GUEST' });
+      });
+      return attendees;
+    }
+
+    function buildPreviewAttendeeOptions(selectedName) {
+      const attendees = getPreviewCheckedInAttendees();
+      let html = `<option value="">-- Chọn --</option>`;
+      attendees.forEach(a => {
+        const isSel = a.name === selectedName ? 'selected' : '';
+        html += `<option value="${a.name}" ${isSel}>${a.name}</option>`;
+      });
+      return html;
+    }
+
+    function formatPreviewMatchResultInfo(idx, m) {
+      const p1 = (m.team1 && m.team1[0]) || '';
+      const p2 = (m.team1 && m.team1[1]) || '';
+      const p3 = (m.team2 && m.team2[0]) || '';
+      const p4 = (m.team2 && m.team2[1]) || '';
+
+      const pair1 = `${p1} ${p2}`.trim() || 'Cặp 1';
+      const pair2 = `${p3} ${p4}`.trim() || 'Cặp 2';
+
+      const s1 = (m.score1 !== undefined && m.score1 !== null) ? Number(m.score1) : 0;
+      const s2 = (m.score2 !== undefined && m.score2 !== null) ? Number(m.score2) : 0;
+      const prize = (m.prize && m.prize.trim()) ? m.prize.trim() : '';
+
+      let highlight1 = 'font-bold text-slate-800 bg-slate-100 px-1.5 py-0.5 rounded';
+      let highlight2 = 'font-bold text-slate-800 bg-slate-100 px-1.5 py-0.5 rounded';
+      let badge1 = '';
+      let badge2 = '';
+      let statusBadge = '<span class="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-slate-100 text-slate-600">Đang đấu</span>';
+      const prizePill = prize ? `<span class="inline-flex items-center gap-0.5 font-bold text-amber-800 bg-amber-100 border border-amber-300 px-1 py-0.2 rounded text-[9px]">🎁 ${prize}</span>` : '';
+
+      if (s1 > s2 && (s1 > 0 || s2 > 0)) {
+        highlight1 = 'font-black text-emerald-900 bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-300';
+        badge1 = ' <span class="text-[10px]" title="Thắng">🏆</span>';
+        statusBadge = `<span class="px-1.5 py-0.5 rounded-full text-[9px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 inline-flex items-center gap-1">🏆 ${pair1} Thắng ${prizePill}</span>`;
+      } else if (s2 > s1 && (s1 > 0 || s2 > 0)) {
+        highlight2 = 'font-black text-emerald-900 bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-300';
+        badge2 = ' <span class="text-[10px]" title="Thắng">🏆</span>';
+        statusBadge = `<span class="px-1.5 py-0.5 rounded-full text-[9px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 inline-flex items-center gap-1">🏆 ${pair2} Thắng ${prizePill}</span>`;
+      } else if (s1 === s2 && s1 > 0) {
+        statusBadge = `<span class="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-amber-100 text-amber-800 border border-amber-300 inline-flex items-center gap-1">Hòa ${prizePill}</span>`;
+      } else if (prize) {
+        statusBadge = `<span class="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-slate-100 text-slate-600 inline-flex items-center gap-1">Đang đấu ${prizePill}</span>`;
+      }
+
+      const prizeLineTag = prize ? ` <span class="inline-flex items-center gap-0.5 text-[9px] font-bold text-amber-800 bg-amber-50 px-1 py-0.2 rounded border border-amber-200">🎁 ${prize}</span>` : '';
+      const lineHtml = `Trận ${idx + 1}: <span class="${highlight1}"><b>${pair1}</b> (${s1})${badge1}</span> <span class="text-slate-400 font-bold px-0.5">đấu với</span> <span class="${highlight2}"><b>${pair2}</b> (${s2})${badge2}</span>${prizeLineTag}`;
+      const headerPill = `🏸 ${pair1} (${s1}) - (${s2}) ${pair2}${prize ? ` • 🎁 ${prize}` : ''}`;
+
+      return { s1, s2, pair1, pair2, prize, lineHtml, headerPill, statusBadge };
+    }
+
+    function updatePreviewMatchRealtime() {
+      const summaryCard = document.getElementById('previewMatchLinesSummaryCard');
+      const summaryContainer = document.getElementById('previewMatchLinesSummary');
+      if (summaryCard && summaryContainer) {
+        if (previewMatches.length === 0) {
+          summaryCard.classList.add('hidden');
+        } else {
+          summaryCard.classList.remove('hidden');
+          summaryContainer.innerHTML = previewMatches.map((m, idx) => {
+            const info = formatPreviewMatchResultInfo(idx, m);
+            return `
+              <div class="p-1.5 bg-white rounded-lg border border-emerald-200 shadow-2xs flex items-center justify-between flex-wrap gap-1">
+                <div class="flex items-center gap-1 flex-wrap">
+                  <span class="w-4 h-4 rounded bg-emerald-700 text-white font-black text-[9px] flex items-center justify-center">${idx + 1}</span>
+                  <span class="text-[10px] text-slate-800">${info.lineHtml}</span>
+                </div>
+                <div>${info.statusBadge}</div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // Update match cards
+      previewMatches.forEach((m, idx) => {
+        const info = formatPreviewMatchResultInfo(idx, m);
+        const lineEl = document.getElementById(`previewCardResultLine-${m.id}`);
+        const badgeEl = document.getElementById(`previewHeaderResult-${m.id}`);
+        if (lineEl) {
+          lineEl.innerHTML = `
+            <div class="flex items-center gap-1 flex-wrap">
+              <span class="text-xs">🏸</span>
+              <span class="text-[10px]">${info.lineHtml}</span>
+            </div>
+            <div>${info.statusBadge}</div>
+          `;
+        }
+        if (badgeEl) {
+          badgeEl.textContent = info.headerPill;
+        }
+      });
+    }
+
+    function renderPreviewMatches() {
+      const container = document.getElementById('previewMatchesContainer');
+      const badge = document.getElementById('previewMatchCountBadge');
+      const statsBar = document.getElementById('previewMemberMatchStatsBar');
+      if (!container) return;
+
+      if (badge) badge.innerText = `${previewMatches.length} trận`;
+
+      const attendees = getPreviewCheckedInAttendees();
+      const matchCounts = {};
+      attendees.forEach(a => matchCounts[a.name] = 0);
+
+      previewMatches.forEach(m => {
+        (m.team1 || []).forEach(name => { if (matchCounts[name] !== undefined) matchCounts[name]++; });
+        (m.team2 || []).forEach(name => { if (matchCounts[name] !== undefined) matchCounts[name]++; });
+      });
+
+      if (statsBar) {
+        if (attendees.length === 0) {
+          statsBar.innerHTML = `<span class="text-slate-400 italic">Chưa chọn thành viên điểm danh</span>`;
+        } else {
+          statsBar.innerHTML = attendees.map(a => {
+            const c = matchCounts[a.name] || 0;
+            const style = c === 0 
+              ? 'bg-slate-100 text-slate-500 border-slate-200' 
+              : (c >= 2 ? 'bg-emerald-100 text-emerald-800 border-emerald-300 font-black' : 'bg-white text-slate-800 border-slate-200 font-bold');
+            return `<span class="px-1.5 py-0.5 rounded border ${style}">${a.name}: ${c} trận</span>`;
+          }).join('');
+        }
+      }
+
+      if (previewMatches.length === 0) {
+        container.innerHTML = `
+          <div class="py-4 text-center text-slate-400 text-xs bg-slate-50 rounded-xl border border-dashed border-slate-200">
+            Chưa có trận đấu nào. Bấm <b>+ Thêm trận</b> hoặc <b>🎲 Bốc ngẫu nhiên</b>!
+          </div>
+        `;
+        updatePreviewMatchRealtime();
+        return;
+      }
+
+      container.innerHTML = previewMatches.map((m, idx) => {
+        const p1 = (m.team1 && m.team1[0]) || '';
+        const p2 = (m.team1 && m.team1[1]) || '';
+        const p3 = (m.team2 && m.team2[0]) || '';
+        const p4 = (m.team2 && m.team2[1]) || '';
+
+        const info = formatPreviewMatchResultInfo(idx, m);
+
+        return `
+          <div class="bg-white p-2.5 rounded-xl border border-slate-200 space-y-2 text-xs shadow-xs">
+            <!-- Header: Trận # + Huy hiệu tỉ số theo cặp + Xóa -->
+            <div class="flex items-center justify-between flex-wrap gap-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="w-5 h-5 rounded-md bg-emerald-700 text-white font-black text-[10px] flex items-center justify-center">${idx + 1}</span>
+                <b class="text-slate-900 font-black text-[11px] uppercase">Trận #${idx + 1}</b>
+                <span id="previewHeaderResult-${m.id}" class="text-[10px] font-bold text-emerald-900 bg-emerald-100/90 px-1.5 py-0.5 rounded border border-emerald-300">
+                  ${info.headerPill}
+                </span>
+              </div>
+              <button onclick="removePreviewMatch(${m.id})" class="text-slate-400 hover:text-rose-600 text-xs p-1" title="Xóa trận">✕</button>
+            </div>
+
+            <!-- Team Pickers + Tỉ số đi liền theo từng cặp -->
+            <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-2 rounded-lg border border-slate-200">
+              <!-- Đội 1 (Cặp 1) -->
+              <div class="space-y-1 bg-emerald-50/60 p-1.5 rounded-lg border border-emerald-200/80">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-black text-emerald-900 uppercase block">Đội 1 (Cặp 1)</span>
+                  <div class="flex items-center gap-0.5 bg-white px-1 py-0.5 rounded border border-emerald-300 shadow-2xs">
+                    <span class="text-[9px] font-bold text-slate-500">Điểm:</span>
+                    <input type="number" min="0" max="30" value="${info.s1}" 
+                           oninput="updatePreviewMatchScore(${m.id}, this.value, null)" 
+                           class="w-7 text-center font-black text-xs text-emerald-900 bg-transparent focus:outline-none" />
+                  </div>
+                </div>
+                <select onchange="updatePreviewMatchPlayer(${m.id}, 0, 0, this.value)" class="w-full text-[11px] font-semibold border border-slate-200 rounded p-1 bg-white">
+                  ${buildPreviewAttendeeOptions(p1)}
+                </select>
+                <select onchange="updatePreviewMatchPlayer(${m.id}, 0, 1, this.value)" class="w-full text-[11px] font-semibold border border-slate-200 rounded p-1 bg-white">
+                  ${buildPreviewAttendeeOptions(p2)}
+                </select>
+              </div>
+
+              <!-- Đội 2 (Cặp 2) -->
+              <div class="space-y-1 bg-amber-50/60 p-1.5 rounded-lg border border-amber-200/80">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-black text-amber-900 uppercase block">Đội 2 (Cặp 2)</span>
+                  <div class="flex items-center gap-0.5 bg-white px-1 py-0.5 rounded border border-amber-300 shadow-2xs">
+                    <span class="text-[9px] font-bold text-slate-500">Điểm:</span>
+                    <input type="number" min="0" max="30" value="${info.s2}" 
+                           oninput="updatePreviewMatchScore(${m.id}, null, this.value)" 
+                           class="w-7 text-center font-black text-xs text-amber-900 bg-transparent focus:outline-none" />
+                  </div>
+                </div>
+                <select onchange="updatePreviewMatchPlayer(${m.id}, 1, 0, this.value)" class="w-full text-[11px] font-semibold border border-slate-200 rounded p-1 bg-white">
+                  ${buildPreviewAttendeeOptions(p3)}
+                </select>
+                <select onchange="updatePreviewMatchPlayer(${m.id}, 1, 1, this.value)" class="w-full text-[11px] font-semibold border border-slate-200 rounded p-1 bg-white">
+                  ${buildPreviewAttendeeOptions(p4)}
+                </select>
+              </div>
+            </div>
+
+            <!-- Giải thưởng cho đội thắng (2 lốc, 4 bò húc, 1 tháp bia...) -->
+            <div class="bg-amber-50/70 p-2 rounded-lg border border-amber-200/80 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-1 text-[10px]">
+                  <span>🎁</span>
+                  <b class="text-amber-950 font-black uppercase">Thưởng đội thắng:</b>
+                </div>
+                <span class="text-[9px] text-amber-700 italic">bò húc, lốc, bia...</span>
+              </div>
+              <div class="flex items-center gap-1 flex-wrap">
+                <button type="button" onclick="setQuickPreviewMatchPrize(${m.id}, '4 Bò húc')" 
+                        class="px-1.5 py-0.5 bg-white hover:bg-amber-100 text-amber-900 border border-amber-300 rounded text-[9px] font-black transition shadow-2xs">
+                  🥤 4 Bò húc
+                </button>
+                <button type="button" onclick="setQuickPreviewMatchPrize(${m.id}, '2 Lốc')" 
+                        class="px-1.5 py-0.5 bg-white hover:bg-amber-100 text-amber-900 border border-amber-300 rounded text-[9px] font-black transition shadow-2xs">
+                  🥫 2 Lốc
+                </button>
+                <button type="button" onclick="setQuickPreviewMatchPrize(${m.id}, '1 Tháp bia')" 
+                        class="px-1.5 py-0.5 bg-white hover:bg-amber-100 text-amber-900 border border-amber-300 rounded text-[9px] font-black transition shadow-2xs">
+                  🍺 1 Tháp bia
+                </button>
+                <div class="flex-1 min-w-[110px] flex items-center gap-1 bg-white px-1.5 py-0.5 rounded border border-amber-300 shadow-2xs">
+                  <span class="text-[9px] text-slate-400">Khác:</span>
+                  <input type="text" id="previewPrizeInput-${m.id}" value="${m.prize || ''}" 
+                         placeholder="vd: 2 lọc..." 
+                         oninput="updatePreviewMatchPrize(${m.id}, this.value)" 
+                         class="w-full text-[10px] font-bold text-amber-900 bg-transparent focus:outline-none placeholder:text-slate-300" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Dòng kết quả trận đấu hiển thị tỉ số theo cặp -->
+            <div id="previewCardResultLine-${m.id}" class="flex items-center justify-between pt-1 border-t border-slate-100 flex-wrap gap-1">
+              <div class="flex items-center gap-1 flex-wrap">
+                <span class="text-xs">🏸</span>
+                <span class="text-[10px]">${info.lineHtml}</span>
+              </div>
+              <div>${info.statusBadge}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updatePreviewMatchRealtime();
+    }
+
+    function addPreviewMatch() {
+      const attendees = getPreviewCheckedInAttendees();
+      const p1 = attendees[0] ? attendees[0].name : '';
+      const p2 = attendees[1] ? attendees[1].name : '';
+      const p3 = attendees[2] ? attendees[2].name : '';
+      const p4 = attendees[3] ? attendees[3].name : '';
+
+      previewMatches.push({
+        id: Date.now(),
+        team1: [p1, p2],
+        team2: [p3, p4],
+        score1: 21,
+        score2: 19,
+        prize: '4 Bò húc'
+      });
+      renderPreviewMatches();
+    }
+
+    function removePreviewMatch(id) {
+      previewMatches = previewMatches.filter(m => m.id !== id);
+      renderPreviewMatches();
+    }
+
+    function updatePreviewMatchPlayer(matchId, teamIdx, playerIdx, val) {
+      const m = previewMatches.find(x => x.id === matchId);
+      if (m) {
+        if (teamIdx === 0) {
+          if (!m.team1) m.team1 = ['', ''];
+          m.team1[playerIdx] = val;
+        } else {
+          if (!m.team2) m.team2 = ['', ''];
+          m.team2[playerIdx] = val;
+        }
+        renderPreviewMatches();
+      }
+    }
+
+    function updatePreviewMatchScore(matchId, s1, s2) {
+      const m = previewMatches.find(x => x.id === matchId);
+      if (m) {
+        if (s1 !== null && s1 !== undefined) m.score1 = parseInt(s1) || 0;
+        if (s2 !== null && s2 !== undefined) m.score2 = parseInt(s2) || 0;
+        updatePreviewMatchRealtime();
+      }
+    }
+
+    function updatePreviewMatchPrize(matchId, val) {
+      const m = previewMatches.find(x => x.id === matchId);
+      if (m) {
+        m.prize = val;
+        updatePreviewMatchRealtime();
+      }
+    }
+
+    function setQuickPreviewMatchPrize(matchId, val) {
+      const m = previewMatches.find(x => x.id === matchId);
+      if (m) {
+        m.prize = val;
+        const inp = document.getElementById(`previewPrizeInput-${matchId}`);
+        if (inp) inp.value = val;
+        updatePreviewMatchRealtime();
+      }
+    }
+
+    function randomPreviewMatch() {
+      const attendees = getPreviewCheckedInAttendees();
+      if (attendees.length < 4) {
+        alert('Cần ít nhất 4 người có mặt điểm danh để bốc thăm ngẫu nhiên một trận cầu!');
+        return;
+      }
+
+      // Đếm số trận đã chơi
+      const matchCounts = {};
+      attendees.forEach(a => matchCounts[a.name] = 0);
+      previewMatches.forEach(m => {
+        (m.team1 || []).forEach(name => { if (matchCounts[name] !== undefined) matchCounts[name]++; });
+        (m.team2 || []).forEach(name => { if (matchCounts[name] !== undefined) matchCounts[name]++; });
+      });
+
+      // Ưu tiên người chơi ít trận nhất trước
+      const sortedAttendees = [...attendees].sort((a, b) => {
+        const diff = (matchCounts[a.name] || 0) - (matchCounts[b.name] || 0);
+        if (diff !== 0) return diff;
+        return Math.random() - 0.5;
+      });
+
+      const chosen = sortedAttendees.slice(0, 4).map(x => x.name).sort(() => Math.random() - 0.5);
+
+      previewMatches.push({
+        id: Date.now(),
+        team1: [chosen[0], chosen[1]],
+        team2: [chosen[2], chosen[3]],
+        score1: 0,
+        score2: 0,
+        prize: '4 Bò húc'
+      });
+      renderPreviewMatches();
+    }
+
+    let previewTournamentData = null;
+
+    function openPreviewTournamentModal() {
+      const modal = document.getElementById('previewTournamentModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        if (!previewTournamentData) {
+          drawPreviewTournament();
+        }
+      }
+    }
+
+    function closePreviewTournamentModal() {
+      const modal = document.getElementById('previewTournamentModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function addPreviewManualPair(branch) {
+      if (!previewTournamentData) drawPreviewTournament();
+      const allNames = ['VĂN', 'TÙNG', 'KHÁNH', 'LONG', 'NAM', 'BẢO', 'HẢI', 'QUÂN'];
+      const p1 = allNames[Math.floor(Math.random() * allNames.length)];
+      const p2 = allNames[Math.floor(Math.random() * allNames.length)];
+      const newPair = [p1, p2];
+      if (branch === 'A') {
+        previewTournamentData.branchA.push(newPair);
+      } else {
+        previewTournamentData.branchB.push(newPair);
+      }
+      recalculatePreviewTournamentMatches();
+      renderPreviewTournamentResults();
+    }
+
+    function drawPreviewTournament() {
+      let attendees = getPreviewCheckedInAttendees();
+      if (attendees.length < 4) {
+        const allChips = document.querySelectorAll('.preview-chip');
+        if (allChips.length >= 4) {
+          attendees = Array.from(allChips).slice(0, 8).map(chip => ({
+            name: chip.innerText.replace('✓ ', '').trim(),
+            type: 'MEMBER'
+          }));
+        } else {
+          attendees = [
+            { name: 'CHÍNH' }, { name: 'CÔNG' }, { name: 'DŨNG' }, { name: 'DUY' },
+            { name: 'HIẾU' }, { name: 'HOÀI' }, { name: 'HUY' }, { name: 'ĐẠT TƯƠI' }
+          ];
+        }
+      }
+
+      // Shuffle attendees
+      const shuffled = [...attendees].sort(() => Math.random() - 0.5);
+
+      // Pair into doubles
+      const pairs = [];
+      for (let i = 0; i < shuffled.length; i += 2) {
+        if (i + 1 < shuffled.length) {
+          pairs.push([shuffled[i].name, shuffled[i + 1].name]);
+        } else {
+          pairs.push([shuffled[i].name]);
+        }
+      }
+
+      // Distribute pairs alternately into Nhánh A and Nhánh B
+      const branchA = [];
+      const branchB = [];
+      pairs.forEach((pair, idx) => {
+        if (idx % 2 === 0) branchA.push(pair);
+        else branchB.push(pair);
+      });
+
+      if (branchA.length < 2 && pairs.length >= 2) branchA.push(pairs[1]);
+      if (branchB.length < 2 && pairs.length >= 3) branchB.push(pairs[2]);
+
+      previewTournamentData = {
+        branchA,
+        branchB
+      };
+
+      recalculatePreviewTournamentMatches();
+      renderPreviewTournamentResults();
+    }
+
+    let previewTourDrawMode = 'RANDOM';
+
+    function switchPreviewTourMode(mode) {
+      previewTourDrawMode = mode;
+      const btnRandom = document.getElementById('btnPreviewTourModeRandom');
+      const btnManual = document.getElementById('btnPreviewTourModeManual');
+      const randomBlock = document.getElementById('previewTourRandomActionBlock');
+      const manualBlock = document.getElementById('previewTourManualActionBlock');
+
+      if (mode === 'RANDOM') {
+        if (btnRandom) btnRandom.className = 'py-1.5 rounded-lg bg-white text-purple-900 shadow-2xs border border-purple-200 flex items-center justify-center gap-1 font-black cursor-pointer';
+        if (btnManual) btnManual.className = 'py-1.5 rounded-lg text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 cursor-pointer font-semibold';
+        if (randomBlock) randomBlock.classList.remove('hidden');
+        if (manualBlock) manualBlock.classList.add('hidden');
+      } else {
+        if (btnManual) btnManual.className = 'py-1.5 rounded-lg bg-white text-purple-900 shadow-2xs border border-purple-200 flex items-center justify-center gap-1 font-black cursor-pointer';
+        if (btnRandom) btnRandom.className = 'py-1.5 rounded-lg text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 cursor-pointer font-semibold';
+        if (randomBlock) randomBlock.classList.add('hidden');
+        if (manualBlock) manualBlock.classList.remove('hidden');
+        if (!previewTournamentData) {
+          drawPreviewTournament();
+        }
+      }
+      renderPreviewTournamentResults();
+    }
+
+    function swapPreviewTournamentTeam(branchFrom, idx) {
+      if (!previewTournamentData) return;
+      const { branchA, branchB } = previewTournamentData;
+
+      if (branchFrom === 'A') {
+        if (branchA.length <= 1) {
+          alert('Nhánh A cần có ít nhất 1 đội!');
+          return;
+        }
+        const team = branchA.splice(idx, 1)[0];
+        branchB.push(team);
+      } else {
+        if (branchB.length <= 1) {
+          alert('Nhánh B cần có ít nhất 1 đội!');
+          return;
+        }
+        const team = branchB.splice(idx, 1)[0];
+        branchA.push(team);
+      }
+
+      recalculatePreviewTournamentMatches();
+      renderPreviewTournamentResults();
+    }
+
+    function recalculatePreviewTournamentMatches() {
+      if (!previewTournamentData) return;
+      const { branchA, branchB } = previewTournamentData;
+      const sysSelect = document.getElementById('previewTourSystemSelect');
+      const system = sysSelect ? sysSelect.value : 'KNOCKOUT';
+      previewTournamentData.system = system;
+
+      const matchesA = [];
+      const matchesB = [];
+
+      if (system === 'KNOCKOUT') {
+        const buildMobileKnockout = (branch, teams) => {
+          const list = [];
+          if (teams.length === 2) {
+            list.push({ code: `${branch}-CK`, stage: `Chung Kết Nhánh ${branch}`, team1: teams[0], team2: teams[1], prize: 'Thắng vào Chung Kết CLB' });
+          } else if (teams.length === 3) {
+            list.push({ code: `${branch}-BK`, stage: `Bán Kết Nhánh ${branch}`, team1: teams[1], team2: teams[2], prize: 'Thắng vào CK Nhánh' });
+            list.push({ code: `${branch}-CK`, stage: `Chung Kết Nhánh ${branch}`, team1: teams[0], team2: ['Thắng ' + branch + '-BK'], prize: 'Thắng vào Chung Kết CLB' });
+          } else {
+            list.push({ code: `${branch}-BK1`, stage: `Bán Kết 1 Nhánh ${branch}`, team1: teams[0], team2: teams[1], prize: 'Thắng vào CK Nhánh' });
+            list.push({ code: `${branch}-BK2`, stage: `Bán Kết 2 Nhánh ${branch}`, team1: teams[2], team2: teams[3] || teams[teams.length - 1], prize: 'Thắng vào CK Nhánh' });
+            list.push({ code: `${branch}-CK`, stage: `Chung Kết Nhánh ${branch}`, team1: ['Thắng ' + branch + '-BK1'], team2: ['Thắng ' + branch + '-BK2'], prize: 'Thắng vào Chung Kết CLB' });
+          }
+          return list;
+        };
+        previewTournamentData.matchesA = buildMobileKnockout('A', branchA);
+        previewTournamentData.matchesB = buildMobileKnockout('B', branchB);
+        previewTournamentData.semi1 = null;
+        previewTournamentData.semi2 = null;
+        previewTournamentData.thirdMatch = {
+          team1: ['Á Quân A'],
+          team2: ['Á Quân B'],
+          stage: 'Tranh Hạng 3',
+          prize: '1 Ống cầu thi đấu'
+        };
+        previewTournamentData.finalMatch = {
+          team1: ['Vô Địch A'],
+          team2: ['Vô Địch B'],
+          stage: 'Chung Kết Cúp CLB',
+          prize: 'Cúp + 1 Tháp bia + 4 Bò húc'
+        };
+      } else {
+        // ROUND_ROBIN
+        for (let i = 0; i < branchA.length; i++) {
+          for (let j = i + 1; j < branchA.length; j++) {
+            matchesA.push({
+              code: `A-${matchesA.length + 1}`,
+              team1: branchA[i],
+              team2: branchA[j],
+              stage: 'Nhánh A',
+              prize: '4 Bò húc'
+            });
+          }
+        }
+        for (let i = 0; i < branchB.length; i++) {
+          for (let j = i + 1; j < branchB.length; j++) {
+            matchesB.push({
+              code: `B-${matchesB.length + 1}`,
+              team1: branchB[i],
+              team2: branchB[j],
+              stage: 'Nhánh B',
+              prize: '4 Bò húc'
+            });
+          }
+        }
+        previewTournamentData.matchesA = matchesA;
+        previewTournamentData.matchesB = matchesB;
+        previewTournamentData.semi1 = {
+          team1: branchA[0] || ['Nhất Nhánh A'],
+          team2: branchB[1] || branchB[0] || ['Nhì Nhánh B'],
+          stage: 'Bán Kết 1 (Nhất A vs Nhì B)',
+          prize: '2 Lốc'
+        };
+        previewTournamentData.semi2 = {
+          team1: branchB[0] || ['Nhất Nhánh B'],
+          team2: branchA[1] || branchA[0] || ['Nhì Nhánh A'],
+          stage: 'Bán Kết 2 (Nhất B vs Nhì A)',
+          prize: '2 Lốc'
+        };
+        previewTournamentData.thirdMatch = {
+          team1: ['Thua BK 1'],
+          team2: ['Thua BK 2'],
+          stage: 'Tranh Hạng 3',
+          prize: '1 Ống cầu thi đấu'
+        };
+        previewTournamentData.finalMatch = {
+          team1: ['Thắng BK 1'],
+          team2: ['Thắng BK 2'],
+          stage: 'Chung Kết Cúp CLB',
+          prize: 'Cúp + 1 Tháp bia + 4 Bò húc'
+        };
+      }
+    }
+
+    function renderPreviewTournamentResults() {
+      if (!previewTournamentData) return;
+      const { branchA, branchB, matchesA, matchesB, semi1, semi2, thirdMatch, finalMatch, system } = previewTournamentData;
+
+      const resultsDiv = document.getElementById('previewTournamentResults');
+      if (resultsDiv) {
+        resultsDiv.innerHTML = `
+          <!-- Danh sách Nhánh A & Nhánh B -->
+          <div class="grid grid-cols-2 gap-2">
+            <!-- Nhánh A -->
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-2 space-y-1">
+              <div class="flex items-center justify-between pb-1 border-b border-blue-200">
+                <span class="font-black text-[10px] text-blue-900 uppercase">🔵 NHÁNH A</span>
+                <span class="text-[9px] bg-blue-200 text-blue-800 px-1 rounded font-bold">${branchA.length} đội</span>
+              </div>
+              <div class="space-y-1">
+                ${branchA.map((pair, idx) => `
+                  <div class="p-1.5 bg-white rounded-lg border border-blue-100 text-[10px] font-bold text-slate-800 flex items-center justify-between gap-1 shadow-2xs">
+                    <span class="truncate">A${idx + 1}: ${pair.join('+')}</span>
+                    <button type="button" onclick="swapPreviewTournamentTeam('A', ${idx})" class="px-1 py-0.5 rounded text-[8px] font-black bg-purple-100 hover:bg-purple-200 text-purple-900 border border-purple-300 shrink-0 cursor-pointer" title="Chuyển sang Nhánh B">
+                      ⇄ B
+                    </button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Nhánh B -->
+            <div class="bg-amber-50 border border-amber-200 rounded-xl p-2 space-y-1">
+              <div class="flex items-center justify-between pb-1 border-b border-amber-200">
+                <span class="font-black text-[10px] text-amber-900 uppercase">🟠 NHÁNH B</span>
+                <span class="text-[9px] bg-amber-200 text-amber-800 px-1 rounded font-bold">${branchB.length} đội</span>
+              </div>
+              <div class="space-y-1">
+                ${branchB.map((pair, idx) => `
+                  <div class="p-1.5 bg-white rounded-lg border border-amber-100 text-[10px] font-bold text-slate-800 flex items-center justify-between gap-1 shadow-2xs">
+                    <span class="truncate">B${idx + 1}: ${pair.join('+')}</span>
+                    <button type="button" onclick="swapPreviewTournamentTeam('B', ${idx})" class="px-1 py-0.5 rounded text-[8px] font-black bg-blue-100 hover:bg-blue-200 text-blue-900 border border-blue-300 shrink-0 cursor-pointer" title="Chuyển sang Nhánh A">
+                      ⇄ A
+                    </button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Lịch thi đấu -->
+          <div class="space-y-1.5">
+            <div class="text-[10px] font-black text-slate-800 uppercase tracking-wide flex items-center justify-between">
+              <span>📅 Lịch thi đấu ${system === 'KNOCKOUT' ? 'Đấu Loại Trực Tiếp' : 'Vòng Bảng'}:</span>
+              <span class="text-[9px] text-purple-700 bg-purple-50 px-1 rounded font-bold">${system === 'KNOCKOUT' ? '⚡ Knockout' : '🔄 Bảng'}</span>
+            </div>
+
+            <!-- Trận nhánh A -->
+            ${matchesA.map((m, idx) => `
+              <div class="p-1.5 bg-blue-50/60 border border-blue-200 rounded-lg flex items-center justify-between text-[10px]">
+                <div class="truncate mr-1">
+                  <span class="font-black text-blue-900">${m.code || ('A-' + (idx + 1))}:</span>
+                  <span class="font-bold text-slate-800"> ${m.team1.join('+')}</span> 
+                  <span class="text-slate-400">vs</span> 
+                  <span class="font-bold text-slate-800">${m.team2.join('+')}</span>
+                </div>
+                <span class="text-[8px] bg-amber-100 text-amber-900 px-1 py-0.2 rounded font-bold shrink-0">🎁 ${m.prize}</span>
+              </div>
+            `).join('')}
+
+            <!-- Trận nhánh B -->
+            ${matchesB.map((m, idx) => `
+              <div class="p-1.5 bg-amber-50/60 border border-amber-200 rounded-lg flex items-center justify-between text-[10px]">
+                <div class="truncate mr-1">
+                  <span class="font-black text-amber-900">${m.code || ('B-' + (idx + 1))}:</span>
+                  <span class="font-bold text-slate-800"> ${m.team1.join('+')}</span> 
+                  <span class="text-slate-400">vs</span> 
+                  <span class="font-bold text-slate-800">${m.team2.join('+')}</span>
+                </div>
+                <span class="text-[8px] bg-amber-100 text-amber-900 px-1 py-0.2 rounded font-bold shrink-0">🎁 ${m.prize}</span>
+              </div>
+            `).join('')}
+
+            <!-- Vòng Knockout Chung Kết -->
+            <div class="p-2 bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-xl space-y-1">
+              <div class="text-[9px] font-black text-purple-900 uppercase">🏆 Vòng Tranh Cúp & Phân Hạng CLB:</div>
+              ${semi1 && semi2 ? `
+              <div class="p-1 bg-white rounded border border-purple-100 flex items-center justify-between text-[10px]">
+                <span>BK 1: <b>${semi1.team1.join('+')}</b> vs <b>${semi1.team2.join('+')}</b></span>
+                <span class="text-[9px] text-purple-700 font-bold">🎁 2 Lốc</span>
+              </div>
+              <div class="p-1 bg-white rounded border border-purple-100 flex items-center justify-between text-[10px]">
+                <span>BK 2: <b>${semi2.team1.join('+')}</b> vs <b>${semi2.team2.join('+')}</b></span>
+                <span class="text-[9px] text-purple-700 font-bold">🎁 2 Lốc</span>
+              </div>` : ''}
+              ${thirdMatch ? `
+              <div class="p-1 bg-white rounded border border-amber-200 flex items-center justify-between text-[10px]">
+                <span>🥉 TRANH HẠNG 3: <b>${thirdMatch.team1.join('+')}</b> vs <b>${thirdMatch.team2.join('+')}</b></span>
+                <span class="text-[9px] text-amber-800 font-bold">🎁 ${thirdMatch.prize}</span>
+              </div>` : ''}
+              <div class="p-1.5 bg-gradient-to-r from-amber-100 to-yellow-100 border border-amber-300 rounded font-black text-[10px] text-amber-900 flex items-center justify-between">
+                <span>🥇 CHUNG KẾT TRANH CÚP: ${finalMatch.team1.join('+')} vs ${finalMatch.team2.join('+')}</span>
+                <span class="text-[9px] bg-amber-500 text-white px-1.5 py-0.5 rounded shadow-2xs">🏆 ${finalMatch.prize}</span>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const btnApply = document.getElementById('btnApplyPreviewTournament');
+        if (btnApply) btnApply.disabled = false;
+      }
+    }
+
+    function applyPreviewTournamentToMatches() {
+      if (!previewTournamentData) return;
+      const { matchesA, matchesB, semi1, semi2, thirdMatch, finalMatch } = previewTournamentData;
+
+      const newMatches = [];
+      let nextId = Date.now();
+
+      // Push Branch A matches
+      matchesA.forEach(m => {
+        newMatches.push({
+          id: nextId++,
+          team1: [...m.team1],
+          team2: [...m.team2],
+          score1: 0,
+          score2: 0,
+          prize: m.prize || 'Kèo Nhánh A'
+        });
+      });
+
+      // Push Branch B matches
+      matchesB.forEach(m => {
+        newMatches.push({
+          id: nextId++,
+          team1: [...m.team1],
+          team2: [...m.team2],
+          score1: 0,
+          score2: 0,
+          prize: m.prize || 'Kèo Nhánh B'
+        });
+      });
+
+      // Push Semi-finals if any
+      if (semi1 && semi2) {
+        newMatches.push({
+          id: nextId++,
+          team1: [...semi1.team1],
+          team2: [...semi1.team2],
+          score1: 0,
+          score2: 0,
+          prize: semi1.prize || '2 Lốc'
+        });
+        newMatches.push({
+          id: nextId++,
+          team1: [...semi2.team1],
+          team2: [...semi2.team2],
+          score1: 0,
+          score2: 0,
+          prize: semi2.prize || '2 Lốc'
+        });
+      }
+
+      // Push Third place
+      if (thirdMatch) {
+        newMatches.push({
+          id: nextId++,
+          team1: [...thirdMatch.team1],
+          team2: [...thirdMatch.team2],
+          score1: 0,
+          score2: 0,
+          prize: thirdMatch.prize || '1 Ống cầu thi đấu'
+        });
+      }
+
+      // Push Final
+      if (finalMatch) {
+        newMatches.push({
+          id: nextId++,
+          team1: [...finalMatch.team1],
+          team2: [...finalMatch.team2],
+          score1: 0,
+          score2: 0,
+          prize: finalMatch.prize || 'Cúp + 1 Tháp bia + 4 Bò húc'
+        });
+      }
+
+      previewMatches = newMatches;
+      renderPreviewMatches();
+      closePreviewTournamentModal();
+      alert(`Đã nạp ${newMatches.length} trận đấu giải vào danh sách thi đấu!`);
+    }
+
+    // Init matches
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPreviewMatches();
+    });
+    // In case DOM already loaded
+    setTimeout(renderPreviewMatches, 100);
+  </script>
+</body>
+</html>

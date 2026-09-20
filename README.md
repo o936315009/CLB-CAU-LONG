@@ -7,18 +7,17 @@
 ## 🌟 Chi Tiết Các Chức Năng Đã Có
 
 ### 1. Trang Chủ (Dashboard)
-- **4 Thẻ Chỉ Số KPI Trực Quan:**
+- **3 Thẻ Chỉ Số KPI Trực Quan Trên Cùng 1 Dòng:**
   - **Quỹ CLB:** Số dư khả dụng hiện tại, tổng hợp thu chi chung của CLB (tiền mua cầu, thuê sân cố định, nước uống, tài trợ).
   - **Quỹ Tạm Ứng:** Quỹ thành viên ứng trước / tiền cọc giải đấu, cọc sân dài hạn.
   - **Tổng Ví Thành Viên:** Tổng số dư tiền gửi trong ví của tất cả các thành viên trong CLB.
-  - **Số Lượng Thành Viên:** Tổng số người sinh hoạt (phân tách chi tiết số thành viên chính thức, tập sự, khách).
 - **Theo dõi ví từng thành viên:** Bảng tra cứu trực quan số dư thực tế, số buổi đã tham gia trong tháng, cảnh báo ví bị âm tiền, nút nạp ví nhanh cho từng người.
 - **Giao dịch gần đây:** Nhật ký thời gian thực ghi nhận biến động dòng tiền (Nạp ví, Tiền sân, Thu/Chi quỹ, Phạt, Tạm ứng).
 
 ### 2. Điểm Danh & Tự Động Tính Bậc Tiền Sân
 - **Phân loại đối tượng khi điểm danh:**
   - **Thành viên chính thức (Official):** Hội viên gắn bó lâu dài.
-  - **Thành viên không chính thức (Unofficial):** Hội viên tập sự, thử việc.
+  - **Thành viên danh dự (Honorary):** Hội viên danh dự, khách quý CLB.
   - **Khách giao lưu (A/B/C):** Khách ngoài đến giao lưu theo từng mức phí.
 - **Cơ chế tính bậc tiền sân theo số buổi trong tháng:**
   - **0 – 4 buổi:** `50.000đ/buổi`
@@ -29,7 +28,7 @@
 - **Tạo điểm danh nhanh đa năng (Quick Attendance):**
   - **⚡ Điểm danh 1-chạm:** Nút `⚡` ngay tại hàng thành viên trên Trang chủ hoặc bảng điểm danh -> Hệ thống hiển thị số tiền trừ theo bậc và số dư ví, xác nhận 1 phát là xong ngay!
   - **📋 Dán danh sách Zalo / Messenger:** Copy danh sách người tham gia từ Zalo (ví dụ: `1. Tuấn`, `2. Hoàng`, `3. Hương...`) dán vào ô, hệ thống tự động bóc tách số thứ tự, nhận diện và khớp chính xác tên hội viên trong CLB -> Bấm **"⚡ Điểm danh toàn bộ danh sách đã khớp"** để trừ ví hàng loạt trong 1 giây!
-  - **👥 Điểm danh theo nhóm:** 1 click điểm danh toàn bộ Thành viên chính thức hoặc Thành viên tập sự.
+  - **👥 Điểm danh theo nhóm:** 1 click điểm danh toàn bộ Thành viên chính thức hoặc Thành viên danh dự.
 - **Tự động trừ tiền vào ví thành viên:** Khi bấm xác nhận điểm danh, hệ thống tự tính tổng tiền, trừ trực tiếp vào ví của từng thành viên, tự động tăng số buổi tham gia trong tháng, ghi nhận doanh thu vào Quỹ CLB và lưu lịch sử giao dịch.
 
 ### 3. Thanh Toán & Quỹ
@@ -44,7 +43,7 @@
 - **Tạo thành viên chính thức:** Điền họ tên, số điện thoại, số dư ví ban đầu.
 - **Tạo tài khoản đăng nhập:** Thiết lập username/password cho từng thành viên tra cứu ví cá nhân.
 - **Cấp lại mật khẩu:** Khôi phục và đặt mật khẩu mới nhanh chóng khi thành viên quên.
-- **Tạo thành viên không chính thức:** Hội viên tập sự, vãng lai.
+- **Tạo thành viên danh dự:** Hội viên danh dự của CLB.
 - **Tạo khách giao lưu A/B/C:** Thêm nhanh khách giao lưu trực tiếp tại sân với đơn giá riêng.
 
 ### 5. Bốc Thăm Chia Sân & Ghép Cặp Cầu Lông (Matchmaker)
